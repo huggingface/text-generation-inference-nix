@@ -1,0 +1,27 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1722673204,
+        "narHash": "sha256-06fdIDojVT79HxIhheoCuvKNk48f9caqVJaB3fsKTz8=",
+        "owner": "danieldk",
+        "repo": "nixpkgs",
+        "rev": "4d480b99fa3103412bb677c15052f30ebd6ff7a1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "danieldk",
+        "ref": "cudnn-9.3",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
