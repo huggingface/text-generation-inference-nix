@@ -26,6 +26,7 @@
               (python3.withPackages (ps: with self.packages.${system}.python3Packages; [
                 marlin-kernels
                 torch
+                vllm
               ]))
             ];
           };

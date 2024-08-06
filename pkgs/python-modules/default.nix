@@ -1,18 +1,22 @@
-{ callPackage, pkgs }:
-
-rec {
-  flash-attn = callPackage ./flash-attn {
-    torch = torch-bin;
-  };
-
-  torch-bin = callPackage ./torch/bin.nix { };
-
-  marlin-kernels = callPackage ./marlin-kernels {
-    inherit torch;
-  };
-
+{ callPackage, pkgs, python }:
+let
   torch = callPackage ./torch {
     inherit (pkgs.darwin.apple_sdk.frameworks) Accelerate CoreServices;
     inherit (pkgs.darwin) libobjc;
   };
+  # Override torch for all Python packages.
+  pkgs = python.pkgs.override {
+    overrides = self: super: {
+      inherit torch;
+    };
+  };
+  callPackage = pkgs.callPackage;
+in {
+  inherit (pkgs) torch;
+
+  flash-attn = callPackage ./flash-attn {};
+
+  marlin-kernels = callPackage ./marlin-kernels {};
+
+  vllm = callPackage ./vllm {};
 }
