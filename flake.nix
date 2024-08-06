@@ -8,20 +8,24 @@
     let
       systems = [ "x86_64-linux" ];
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
+      config = {
+        allowUnfree = true;
+        cudaSupport = true;
+      };
     in
     {
       packages = forAllSystems (system:
-        with import nixpkgs { inherit system; config = { allowUnfree = true; }; };
+        with import nixpkgs { inherit config system; };
         callPackage ./default.nix { }
       );
 
       devShells = forAllSystems (system:
-        with import nixpkgs { inherit system; config = { allowUnfree = true; }; }; {
+        with import nixpkgs { inherit config system; }; {
           default = mkShell {
             buildInputs = [
               (python3.withPackages (ps: with self.packages.${system}.python3Packages; [
                 marlin-kernels
-                torch-bin
+                torch
               ]))
             ];
           };
