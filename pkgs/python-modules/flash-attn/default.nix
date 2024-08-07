@@ -40,7 +40,6 @@ buildPythonPackage rec {
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
     FLASH_ATTENTION_FORCE_BUILD = "TRUE";
-    MAX_JOBS = 4;
   };
 
   propagatedBuildInputs = [ torch ];
@@ -51,6 +50,10 @@ buildPythonPackage rec {
 
   # We don't have any tests in this package (yet).
   doCheck = false;
+
+  preBuild = ''
+    export MAX_JOBS=$NIX_BUILD_CORES
+  '';
 
   pythonImportsCheck = [ "flash_attn" ];
 
