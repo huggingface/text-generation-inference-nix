@@ -24,6 +24,7 @@
           default = mkShell {
             buildInputs = [
               (python3.withPackages (ps: with self.packages.${system}.python3Packages; [
+                flash-attn
                 marlin-kernels
                 torch
                 vllm
