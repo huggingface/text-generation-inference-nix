@@ -29,6 +29,7 @@
             inherit
               fbgemm-gpu
               flash-attn
+              flash-attn-layer-norm
               marlin-kernels
               torch
               ;

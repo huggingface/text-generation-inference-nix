@@ -6,6 +6,8 @@ self: super: {
 
         flash-attn = callPackage ./pkgs/python-modules/flash-attn { };
 
+        flash-attn-layer-norm = callPackage ./pkgs/python-modules/flash-attn-layer-norm { };
+
         marlin-kernels = callPackage ./pkgs/python-modules/marlin-kernels { };
 
         torch = callPackage ./pkgs/python-modules/torch {
