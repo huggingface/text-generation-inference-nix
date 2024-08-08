@@ -2,6 +2,7 @@
 , stdenv
 , fetchFromGitHub
 , buildPythonPackage
+, autoAddDriverRunpath
 , cmake
 , git
 , ninja
@@ -35,7 +36,14 @@ buildPythonPackage rec {
     psutil
   ];
 
-  nativeBuildInputs = [ cmake git ninja packaging which ];
+  nativeBuildInputs = [
+    autoAddDriverRunpath
+    cmake
+    git
+    ninja
+    packaging
+    which
+  ];
 
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";

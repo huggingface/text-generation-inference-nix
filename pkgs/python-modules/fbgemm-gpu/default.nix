@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   buildPythonPackage,
+  autoAddDriverRunpath,
   cmake,
   ninja,
   scikit-build,
@@ -29,6 +30,7 @@ buildPythonPackage rec {
   stdenv = cudaPackages.backendStdenv;
 
   nativeBuildInputs = [
+    autoAddDriverRunpath
     cmake
     cudaPackages.cuda_nvcc
     ninja

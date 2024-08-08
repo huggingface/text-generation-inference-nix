@@ -5,6 +5,7 @@
   buildPythonPackage,
   pythonRelaxDepsHook,
   fetchFromGitHub,
+  autoAddDriverRunpath,
   which,
   ninja,
   cmake,
@@ -93,6 +94,7 @@ buildPythonPackage rec {
   '';
 
   nativeBuildInputs = [
+    autoAddDriverRunpath
     cmake
     ninja
     pythonRelaxDepsHook

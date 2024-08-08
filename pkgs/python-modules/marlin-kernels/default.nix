@@ -2,6 +2,7 @@
 , stdenv
 , fetchFromGitHub
 , buildPythonPackage
+, autoAddDriverRunpath
 , cmake
 , ninja
 , which
@@ -30,7 +31,12 @@ buildPythonPackage rec {
     libcusparse
   ];
 
-  nativeBuildInputs = [ cmake ninja which ];
+  nativeBuildInputs = [
+    autoAddDriverRunpath
+    cmake
+    ninja
+    which
+  ];
 
   env = { CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}"; };
 
