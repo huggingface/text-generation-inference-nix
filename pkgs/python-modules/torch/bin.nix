@@ -1,27 +1,27 @@
-{ lib
-, stdenv
-, buildPythonPackage
-, autoAddDriverRunpath
-, fetchurl
-, python
-, pythonAtLeast
-, pythonOlder
-, addDriverRunpath
-, callPackage
-, cudaPackages
-, future
-, numpy
-, autoPatchelfHook
-, pyyaml
-, requests
-, setuptools
-, typing-extensions
-, sympy
-, jinja2
-, networkx
-, filelock
-, triton
-,
+{
+  lib,
+  stdenv,
+  buildPythonPackage,
+  autoAddDriverRunpath,
+  fetchurl,
+  python,
+  pythonAtLeast,
+  pythonOlder,
+  addDriverRunpath,
+  callPackage,
+  cudaPackages,
+  future,
+  numpy,
+  autoPatchelfHook,
+  pyyaml,
+  requests,
+  setuptools,
+  typing-extensions,
+  sympy,
+  jinja2,
+  networkx,
+  filelock,
+  triton,
 }:
 
 let
@@ -102,7 +102,9 @@ buildPythonPackage {
   #
   # This is a quick hack to add `libnvrtc` to the runpath so that torch can find
   # it when it is needed at runtime.
-  extraRunpaths = lib.optionals stdenv.hostPlatform.isLinux [ "${lib.getLib cudaPackages.cuda_nvrtc}/lib" ];
+  extraRunpaths = lib.optionals stdenv.hostPlatform.isLinux [
+    "${lib.getLib cudaPackages.cuda_nvrtc}/lib"
+  ];
   postPhases = lib.optionals stdenv.isLinux [ "postPatchelfPhase" ];
   postPatchelfPhase = ''
     while IFS= read -r -d $'\0' elf ; do

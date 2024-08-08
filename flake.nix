@@ -1,9 +1,10 @@
 {
   description = "tgi development";
 
-  inputs.nixpkgs.url = github:danieldk/nixpkgs/cudnn-9.3;
+  inputs.nixpkgs.url = "github:danieldk/nixpkgs/cudnn-9.3";
 
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     with import nixpkgs;
     let
       systems = [ "x86_64-linux" ];
@@ -14,21 +15,22 @@
       };
     in
     {
-      packages = forAllSystems (system:
-        with import nixpkgs { inherit config system; };
-        callPackage ./default.nix { }
+      packages = forAllSystems (
+        system: with import nixpkgs { inherit config system; }; callPackage ./default.nix { }
       );
 
-      devShells = forAllSystems (system:
-        with import nixpkgs { inherit config system; }; {
+      devShells = forAllSystems (
+        system: with import nixpkgs { inherit config system; }; {
           default = mkShell {
             buildInputs = [
-              (python3.withPackages (ps: with self.packages.${system}.python3Packages; [
-                flash-attn
-                marlin-kernels
-                torch
-                vllm
-              ]))
+              (python3.withPackages (
+                ps: with self.packages.${system}.python3Packages; [
+                  flash-attn
+                  marlin-kernels
+                  torch
+                  vllm
+                ]
+              ))
             ];
           };
         }

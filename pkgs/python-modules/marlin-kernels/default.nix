@@ -1,13 +1,14 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, buildPythonPackage
-, autoAddDriverRunpath
-, cmake
-, ninja
-, which
-, cudaPackages
-, torch
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  buildPythonPackage,
+  autoAddDriverRunpath,
+  cmake,
+  ninja,
+  which,
+  cudaPackages,
+  torch,
 }:
 
 buildPythonPackage rec {
@@ -38,7 +39,9 @@ buildPythonPackage rec {
     which
   ];
 
-  env = { CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}"; };
+  env = {
+    CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+  };
 
   propagatedBuildInputs = [ torch ];
 

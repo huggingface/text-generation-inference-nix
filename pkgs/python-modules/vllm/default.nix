@@ -157,9 +157,7 @@ buildPythonPackage rec {
     ]
     ++ uvicorn.optional-dependencies.standard
     ++ aioprometheus.optional-dependencies.starlette
-    ++ lib.optionals cudaSupport [
-      pynvml
-    ];
+    ++ lib.optionals cudaSupport [ pynvml ];
 
   dontUseCmakeConfigure = true;
   cmakeFlags = [ (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_CUTLASS" "${lib.getDev cutlass}") ];

@@ -1,16 +1,17 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, buildPythonPackage
-, autoAddDriverRunpath
-, cmake
-, git
-, ninja
-, packaging
-, psutil
-, which
-, cudaPackages
-, torch
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  buildPythonPackage,
+  autoAddDriverRunpath,
+  cmake,
+  git,
+  ninja,
+  packaging,
+  psutil,
+  which,
+  cudaPackages,
+  torch,
 }:
 
 buildPythonPackage rec {
