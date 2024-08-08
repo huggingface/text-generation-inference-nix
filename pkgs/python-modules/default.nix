@@ -14,6 +14,8 @@ let
 in {
   inherit (pkgs) torch;
 
+  fbgemm-gpu = callPackage ./fbgemm-gpu {};
+
   flash-attn = callPackage ./flash-attn {};
 
   marlin-kernels = callPackage ./marlin-kernels {};
