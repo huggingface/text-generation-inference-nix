@@ -14,24 +14,24 @@
         cudaSupport = true;
       };
     in
-    {
+    rec {
+      overlay = import ./overlay.nix;
       packages = forAllSystems (
-        system: with import nixpkgs { inherit config system; }; callPackage ./default.nix { }
-      );
-
-      devShells = forAllSystems (
-        system: with import nixpkgs { inherit config system; }; {
-          default = mkShell {
-            buildInputs = [
-              (python3.withPackages (
-                ps: with self.packages.${system}.python3Packages; [
-                  flash-attn
-                  marlin-kernels
-                  torch
-                  vllm
-                ]
-              ))
-            ];
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit config system;
+            overlays = [ overlay ];
+          };
+        in
+        {
+          python3Packages = with pkgs.python3.pkgs; {
+            inherit
+              fbgemm-gpu
+              flash-attn
+              marlin-kernels
+              torch
+              ;
           };
         }
       );
