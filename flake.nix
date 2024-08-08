@@ -30,6 +30,7 @@
               fbgemm-gpu
               flash-attn
               flash-attn-layer-norm
+              flash-attn-rotary
               marlin-kernels
               torch
               ;
