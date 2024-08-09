@@ -1,10 +1,13 @@
 {
   description = "tgi development";
 
-  inputs.nixpkgs.url = "github:danieldk/nixpkgs/cudnn-9.3";
+  inputs = {
+    nixpkgs.url = "github:danieldk/nixpkgs/cudnn-9.3";
+    flake-compat.url = "github:edolstra/flake-compat";
+  };
 
   outputs =
-    { self, nixpkgs }:
+    { self, flake-compat, nixpkgs }:
     with import nixpkgs;
     let
       systems = [ "x86_64-linux" ];
