@@ -16,7 +16,7 @@ self: super: {
           _: prevAttrs: {
             patches = [
               (super.fetchpatch {
-                url = "https://patch-diff.githubusercontent.com/raw/open-telemetry/opentelemetry-python-contrib/pull/2484.diff";
+                url = "https://github.com/open-telemetry/opentelemetry-python-contrib/commit/1c8d8ef5368c15d27c0973ce80787fd94c7b3176.diff";
                 hash = "sha256-Zc9Q5lCxHP73YErf0TqVAsdmgwibW6LZteycW9zB9a8=";
                 stripLen = 2;
                 includes = [ "*grpc*" ];
