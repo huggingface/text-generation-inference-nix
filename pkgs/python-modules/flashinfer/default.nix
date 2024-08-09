@@ -52,6 +52,7 @@ buildPythonPackage rec {
 
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    TORCH_CUDA_ARCH_LIST="${lib.concatStringsSep ";" torch.cudaCapabilities}";
   };
 
   propagatedBuildInputs = [ torch ];
@@ -65,7 +66,6 @@ buildPythonPackage rec {
 
   preBuild = ''
     export MAX_JOBS=$NIX_BUILD_CORES
-    export TORCH_CUDA_ARCH_LIST="${lib.concatStringsSep ";" torch.cudaCapabilities}"
   '';
 
   pythonImportsCheck = [ "flashinfer" ];
