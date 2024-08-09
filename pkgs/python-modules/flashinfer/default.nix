@@ -14,6 +14,7 @@
   torch,
 }:
 
+
 buildPythonPackage rec {
   pname = "flashinfer";
   version = "0.1.4";
@@ -23,8 +24,9 @@ buildPythonPackage rec {
     repo = "flashinfer";
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-ht234geMnOH0xKjhBOCXrzwYZuBFPvJMCZ9P8Vlpxcs=";
+    hash = "sha256-1YCPtnBcIYzNL1tkcRrbzXp26rx+vj3UW+Avbj34x1c=";
   };
+  sourceRoot = "${src.name}/python";
 
   stdenv = cudaPackages.backendStdenv;
 
@@ -46,6 +48,8 @@ buildPythonPackage rec {
     which
   ];
 
+  dependencies = [ torch ];
+
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
   };
@@ -61,6 +65,7 @@ buildPythonPackage rec {
 
   preBuild = ''
     export MAX_JOBS=$NIX_BUILD_CORES
+    export TORCH_CUDA_ARCH_LIST="${lib.concatStringsSep ";" torch.cudaCapabilities}"
   '';
 
   pythonImportsCheck = [ "flashinfer" ];
