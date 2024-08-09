@@ -23,8 +23,13 @@
             inherit config system;
             overlays = [ overlay ];
           };
+          lib = pkgs.lib;
         in
-        {
+        rec {
+          all = pkgs.symlinkJoin {
+            name = "all";
+            paths = lib.attrsets.attrValues python3Packages;
+          };
           python3Packages = with pkgs.python3.pkgs; {
             inherit
               fbgemm-gpu
