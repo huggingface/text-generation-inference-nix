@@ -15,7 +15,7 @@
 }:
 
 buildPythonPackage rec {
-  pname = "flash-attn-layer-norm";
+  pname = "flash-attn-rotary";
   version = "2.6.3";
 
   src = fetchFromGitHub {
