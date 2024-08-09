@@ -58,16 +58,16 @@ buildPythonPackage rec {
 
   env = with cudaPackages; rec {
     CUDAToolkit_ROOT = "${lib.getDev cuda_nvcc}";
-    CMAKE_CUDA_ARCHITECTURES = "8.0;9.0a";
     CUDA_BIN_PATH = CUDAToolkit_ROOT;
   };
 
-  #propagatedBuildInputs = [ torch ];
+  setupPyGlobalFlags = let
+  capabilitiesString =  "${lib.concatStringsSep ";" torch.cudaCapabilities}";
+  in [
 
-  setupPyGlobalFlags = [
     "--package_variant genai"
-    "-DCMAKE_CUDA_ARCHITECTURES='89;90a'"
     "-DCMAKE_CXX_STANDARD=17"
+    "-DTORCH_CUDA_ARCH_LIST='${capabilitiesString}'"
   ];
 
   # cmake/ninja are used for parallel builds, but we don't want the

@@ -110,7 +110,7 @@ let
         "8.7"
         "8.9"
         "9.0"
-        # "9.0a"
+        "9.0a"
       ];
       ptx = lists.map (x: "${x}+PTX") real;
     in
@@ -274,7 +274,7 @@ buildPythonPackage rec {
     # We do not remove the entirety of cmake/Modules_CUDA_fix because we need FindCUDNN.cmake.
     + lib.optionalString cudaSupport ''
       rm cmake/Modules/FindCUDAToolkit.cmake
-      rm -rf cmake/Modules_CUDA_fix/{upstream,FindCUDA.cmake}
+      #rm -rf cmake/Modules_CUDA_fix/{upstream,FindCUDA.cmake}
     ''
     # error: no member named 'aligned_alloc' in the global namespace; did you mean simply 'aligned_alloc'
     # This lib overrided aligned_alloc hence the error message. Tltr: his function is linkable but not in header.
