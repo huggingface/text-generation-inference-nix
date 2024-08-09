@@ -32,7 +32,9 @@
               flash-attn-layer-norm
               flash-attn-rotary
               marlin-kernels
+              opentelemetry-instrumentation-grpc
               torch
+              vllm
               ;
           };
         }

@@ -12,6 +12,23 @@ self: super: {
 
         marlin-kernels = callPackage ./pkgs/python-modules/marlin-kernels { };
 
+        opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
+          _: prevAttrs: {
+            patches = [
+              (super.fetchpatch {
+                url = "https://patch-diff.githubusercontent.com/raw/open-telemetry/opentelemetry-python-contrib/pull/2484.diff";
+                hash = "sha256-Zc9Q5lCxHP73YErf0TqVAsdmgwibW6LZteycW9zB9a8=";
+                stripLen = 2;
+                includes = [ "*grpc*" ];
+              })
+            ];
+
+            meta = prevAttrs.meta // {
+              broken = false;
+            };
+          }
+        );
+
         torch = callPackage ./pkgs/python-modules/torch {
           inherit (super.darwin.apple_sdk.frameworks) Accelerate CoreServices;
           inherit (super.darwin) libobjc;
