@@ -39,6 +39,7 @@
               flash-attn
               flash-attn-layer-norm
               flash-attn-rotary
+              hf-transfer
               marlin-kernels
               opentelemetry-instrumentation-grpc
               torch
