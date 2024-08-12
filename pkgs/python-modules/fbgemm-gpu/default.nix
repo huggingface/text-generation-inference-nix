@@ -63,7 +63,7 @@ buildPythonPackage rec {
 
   setupPyGlobalFlags =
     let
-      capabilitiesString = "${lib.concatStringsSep ";" torch.cudaCapabilities}";
+      capabilitiesString = lib.concatStringsSep ";" torch.cudaCapabilities;
     in
     [
 
