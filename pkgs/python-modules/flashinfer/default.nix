@@ -14,18 +14,18 @@
   torch,
 }:
 
-
 buildPythonPackage rec {
   pname = "flashinfer";
   version = "0.1.4";
 
   src = fetchFromGitHub {
     owner = "flashinfer-ai";
-    repo = "flashinfer";
+    repo = pname;
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-1YCPtnBcIYzNL1tkcRrbzXp26rx+vj3UW+Avbj34x1c=";
+    hash = "sha256-5JmSoSalIEz7oSJHEgQRCofZNHl53TXwbHRcd3c8AEI";
   };
+
   sourceRoot = "${src.name}/python";
 
   stdenv = cudaPackages.backendStdenv;
@@ -42,9 +42,7 @@ buildPythonPackage rec {
   nativeBuildInputs = [
     autoAddDriverRunpath
     cmake
-    git
     ninja
-    packaging
     which
   ];
 
@@ -52,7 +50,7 @@ buildPythonPackage rec {
 
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
-    TORCH_CUDA_ARCH_LIST="${lib.concatStringsSep ";" torch.cudaCapabilities}";
+    TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
   };
 
   propagatedBuildInputs = [ torch ];
