@@ -2,7 +2,7 @@
   description = "tgi development";
 
   inputs = {
-    nixpkgs.url = "github:danieldk/nixpkgs/cudnn-9.3";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     flake-compat.url = "github:edolstra/flake-compat";
   };
 
