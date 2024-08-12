@@ -2,6 +2,8 @@ self: super: {
   python3 = super.python3.override {
     packageOverrides =
       python-self: python-super: with python-self; {
+        causal-conv1d = callPackage ./pkgs/python-modules/causal-conv1d { };
+
         exllamav2 = callPackage ./pkgs/python-modules/exllamav2 { };
 
         fbgemm-gpu = callPackage ./pkgs/python-modules/fbgemm-gpu { };
@@ -34,6 +36,8 @@ self: super: {
             };
           }
         );
+
+        mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
         torch = callPackage ./pkgs/python-modules/torch {
           inherit (super.darwin.apple_sdk.frameworks) Accelerate CoreServices;
