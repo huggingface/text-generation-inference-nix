@@ -40,6 +40,7 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
+              exllamav2
               fbgemm-gpu
               flash-attn
               flash-attn-layer-norm
