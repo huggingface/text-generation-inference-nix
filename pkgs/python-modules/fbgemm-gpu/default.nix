@@ -61,14 +61,16 @@ buildPythonPackage rec {
     CUDA_BIN_PATH = CUDAToolkit_ROOT;
   };
 
-  setupPyGlobalFlags = let
-  capabilitiesString =  "${lib.concatStringsSep ";" torch.cudaCapabilities}";
-  in [
+  setupPyGlobalFlags =
+    let
+      capabilitiesString = "${lib.concatStringsSep ";" torch.cudaCapabilities}";
+    in
+    [
 
-    "--package_variant genai"
-    "-DCMAKE_CXX_STANDARD=17"
-    "-DTORCH_CUDA_ARCH_LIST='${capabilitiesString}'"
-  ];
+      "--package_variant genai"
+      "-DCMAKE_CXX_STANDARD=17"
+      "-DTORCH_CUDA_ARCH_LIST='${capabilitiesString}'"
+    ];
 
   # cmake/ninja are used for parallel builds, but we don't want the
   # cmake configure hook to kick in.

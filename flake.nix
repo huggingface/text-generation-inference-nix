@@ -7,7 +7,11 @@
   };
 
   outputs =
-    { self, flake-compat, nixpkgs }:
+    {
+      self,
+      flake-compat,
+      nixpkgs,
+    }:
     with import nixpkgs;
     let
       systems = [ "x86_64-linux" ];
