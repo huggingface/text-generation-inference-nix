@@ -40,6 +40,7 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
+              causal-conv1d
               exllamav2
               fbgemm-gpu
               flash-attn
@@ -47,6 +48,7 @@
               flash-attn-rotary
               flashinfer
               hf-transfer
+              mamba-ssm
               marlin-kernels
               opentelemetry-instrumentation-grpc
               torch
