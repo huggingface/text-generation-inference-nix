@@ -14,22 +14,19 @@
   torch,
   safetensors,
   tokenizers,
-  rich
+  rich,
 }:
 
-
 buildPythonPackage rec {
-  pname = "exllamav2_ext";
+  pname = "exllamav2";
   version = "0.1.8";
 
   src = fetchFromGitHub {
     owner = "turboderp";
-    repo = "exllamav2";
+    repo = pname;
     rev = "v${version}";
-    fetchSubmodules = true;
     hash = "sha256-w5LDZi/HyWodqlV3ZUabR5cEBzQMaSmHY5rVVQeMXCs=";
   };
-  # sourceRoot = "${src.name}/python";
 
   stdenv = cudaPackages.backendStdenv;
 
@@ -40,28 +37,25 @@ buildPythonPackage rec {
     libcusolver
     libcusparse
     libcurand
-    psutil
   ];
 
   nativeBuildInputs = [
     autoAddDriverRunpath
     cmake
-    git
     ninja
-    packaging
     which
   ];
 
-  dependencies = [ 
-    torch 
+  dependencies = [
+    torch
     safetensors
     tokenizers
     rich
   ];
 
   env = {
-    CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
-    TORCH_CUDA_ARCH_LIST="${lib.concatStringsSep ";" torch.cudaCapabilities}";
+    CUDA_HOME = lib.getDev cudaPackages.cuda_nvcc;
+    TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
   };
 
   propagatedBuildInputs = [ torch ];
@@ -80,7 +74,7 @@ buildPythonPackage rec {
   # pythonImportsCheck = [ "exllamav2" ];
 
   meta = with lib; {
-    description = "Exllam v2";
+    description = "Inference library for running local LLMs on modern consumer GPUs";
     license = licenses.mit;
   };
 }
