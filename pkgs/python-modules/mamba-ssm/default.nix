@@ -8,7 +8,6 @@
   git,
   ninja,
   packaging,
-  psutil,
   which,
   cudaPackages,
   torch,
@@ -36,7 +35,6 @@ buildPythonPackage rec {
     libcublas
     libcusolver
     libcusparse
-    psutil
   ];
 
   nativeBuildInputs = [
@@ -46,15 +44,19 @@ buildPythonPackage rec {
     which
   ];
 
-  dependencies = [ torch packaging einops transformers ];
+  dependencies = [
+    torch
+    packaging
+    einops
+    torch
+    transformers
+  ];
 
   env = {
-    CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    CUDA_HOME = lib.getDev cudaPackages.cuda_nvcc;
     TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
     MAMBA_FORCE_BUILD = "TRUE";
   };
-
-  propagatedBuildInputs = [ torch ];
 
   # cmake/ninja are used for parallel builds, but we don't want the
   # cmake configure hook to kick in.
@@ -70,7 +72,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "mamba_ssm" ];
 
   meta = with lib; {
-    description = "Selective scan";
+    description = "Mamba selective space state model";
     license = licenses.asl20;
   };
 }

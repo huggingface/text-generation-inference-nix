@@ -44,10 +44,13 @@ buildPythonPackage rec {
     which
   ];
 
-  dependencies = [ torch packaging ];
+  dependencies = [
+    torch
+    packaging
+  ];
 
   env = {
-    CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    CUDA_HOME = lib.getDev cudaPackages.cuda_nvcc;
     TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
     CAUSAL_CONV1D_FORCE_BUILD = "TRUE";
   };
@@ -68,7 +71,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "causal_conv1d" ];
 
   meta = with lib; {
-    description = "Selective scan";
+    description = "Causal 1D convolution";
     license = licenses.asl20;
   };
 }
