@@ -22,10 +22,10 @@ buildPythonPackage rec {
   version = "0.1.8";
 
   src = fetchFromGitHub {
-    owner = "turboderp";
+    owner = "Narsil";
     repo = pname;
-    rev = "v${version}";
-    hash = "sha256-w5LDZi/HyWodqlV3ZUabR5cEBzQMaSmHY5rVVQeMXCs=";
+    rev = "add_stream";
+    hash = "sha256-sOyTKhBfWT66bG3ME3nd32N/lvLQNN+iIjt2MdMHjkc=";
   };
 
   stdenv = cudaPackages.backendStdenv;
