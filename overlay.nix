@@ -1,7 +1,9 @@
 self: super: {
+  aws-lc = super.callPackage ./pkgs/by-name/aws/aws-lc { };
   python3 = super.python3.override {
     packageOverrides =
       python-self: python-super: with python-self; {
+
         causal-conv1d = callPackage ./pkgs/python-modules/causal-conv1d { };
 
         exllamav2 = callPackage ./pkgs/python-modules/exllamav2 { };

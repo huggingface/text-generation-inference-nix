@@ -37,6 +37,7 @@
             name = "all";
             paths = lib.attrsets.attrValues python3Packages;
           };
+          aws-lc = pkgs.aws-lc;
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
