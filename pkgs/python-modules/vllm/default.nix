@@ -99,7 +99,8 @@ buildPythonPackage rec {
     ninja
     pythonRelaxDepsHook
     which
-  ] ++ lib.optionals rocmSupport [ rocmPackages.hipcc ];
+  ] ++ lib.optionals cudaSupport [ cudaPackages.cuda_nvcc ]
+    ++ lib.optionals rocmSupport [ rocmPackages.hipcc ];
 
   build-system = [
     packaging
