@@ -26,6 +26,12 @@ buildPythonPackage rec {
     hash = "sha256-5JmSoSalIEz7oSJHEgQRCofZNHl53TXwbHRcd3c8AEI";
   };
 
+  prePatch = "chmod -R +w ..";
+
+  patches = [ ./include-cstdint.diff ];
+
+  patchFlags = ["-d" ".." "-p1"];
+
   sourceRoot = "${src.name}/python";
 
   stdenv = cudaPackages.backendStdenv;

@@ -1,0 +1,36 @@
+diff --git a/include/flashinfer/layout.cuh b/include/flashinfer/layout.cuh
+index caa0df2..aeaf26b 100644
+--- a/include/flashinfer/layout.cuh
++++ b/include/flashinfer/layout.cuh
+@@ -16,6 +16,7 @@
+ #ifndef FLASHINFER_LAYOUT_CUH_
+ #define FLASHINFER_LAYOUT_CUH_
+ 
++#include <cstdint>
+ #include <string>
+ #include <tuple>
+ 
+diff --git a/include/flashinfer/math.cuh b/include/flashinfer/math.cuh
+index c2401c7..13438d5 100644
+--- a/include/flashinfer/math.cuh
++++ b/include/flashinfer/math.cuh
+@@ -16,6 +16,7 @@
+ #ifndef FLASHINFER_MATH_CUH_
+ #define FLASHINFER_MATH_CUH_
+ 
++#include <cstdint>
+ #include <cuda_fp16.h>
+ #include <cuda_runtime.h>
+ 
+diff --git a/include/flashinfer/utils.cuh b/include/flashinfer/utils.cuh
+index c604fc2..70c75f9 100644
+--- a/include/flashinfer/utils.cuh
++++ b/include/flashinfer/utils.cuh
+@@ -17,6 +17,7 @@
+ #define FLASHINFER_UTILS_CUH_
+ #include <cuda_runtime.h>
+ 
++#include <cstdint>
+ #include <iostream>
+ #include <sstream>
+ #include <stdexcept>
