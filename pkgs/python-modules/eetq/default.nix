@@ -1,4 +1,5 @@
 {
+  accelerate,
   lib,
   stdenv,
   fetchFromGitHub,
@@ -12,6 +13,7 @@
   which,
   cudaPackages,
   torch,
+  transformers,
 }:
 
 buildPythonPackage rec {
@@ -47,7 +49,7 @@ buildPythonPackage rec {
     which
   ];
 
-  dependencies = [ torch ];
+  dependencies = [ torch transformers accelerate ];
 
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
