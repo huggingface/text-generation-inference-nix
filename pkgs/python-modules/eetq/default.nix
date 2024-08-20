@@ -23,18 +23,15 @@ buildPythonPackage rec {
     repo = pname;
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "";
+    hash = "sha256-LJejQUYKgy/1Pn1jEl3fX0+/OLevwWlb9sfPZ1cQMIA";
   };
 
-  prePatch = "chmod -R +w ..";
-
-  patchFlags = ["-d" ".." "-p1"];
-
-  sourceRoot = "${src.name}/python";
+  sourceRoot = "${src.name}";
 
   stdenv = cudaPackages.backendStdenv;
 
   buildInputs = with cudaPackages; [
+    cuda_nvtx
     cuda_cccl
     cuda_cudart
     libcublas
@@ -70,7 +67,7 @@ buildPythonPackage rec {
     export MAX_JOBS=$NIX_BUILD_CORES
   '';
 
-  pythonImportsCheck = [ "flashinfer" ];
+  pythonImportsCheck = [ "eetq" ];
 
   meta = with lib; {
     description = "EETQ";
