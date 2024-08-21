@@ -28,8 +28,6 @@ buildPythonPackage rec {
     hash = "sha256-LJejQUYKgy/1Pn1jEl3fX0+/OLevwWlb9sfPZ1cQMIA";
   };
 
-  sourceRoot = "${src.name}";
-
   stdenv = cudaPackages.backendStdenv;
 
   buildInputs = with cudaPackages; [
@@ -39,7 +37,6 @@ buildPythonPackage rec {
     libcublas
     libcusolver
     libcusparse
-    psutil
   ];
 
   nativeBuildInputs = [
@@ -49,10 +46,15 @@ buildPythonPackage rec {
     which
   ];
 
-  dependencies = [ torch transformers accelerate ];
+  dependencies = [
+    accelerate
+    psutil
+    torch
+    transformers
+  ];
 
   env = {
-    CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    CUDA_HOME = lib.getDev cudaPackages.cuda_nvcc;
     TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
   };
 
@@ -72,7 +74,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "eetq" ];
 
   meta = with lib; {
-    description = "EETQ";
+    description = "Easy and Efficient Quantization for Transformers";
     license = licenses.asl20;
   };
 }
