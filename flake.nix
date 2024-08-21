@@ -41,6 +41,7 @@
             inherit
 
               causal-conv1d
+              eetq
               exllamav2
               fbgemm-gpu
               flash-attn

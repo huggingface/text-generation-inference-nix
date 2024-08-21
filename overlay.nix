@@ -4,6 +4,8 @@ self: super: {
       python-self: python-super: with python-self; {
         causal-conv1d = callPackage ./pkgs/python-modules/causal-conv1d { };
 
+        eetq = callPackage ./pkgs/python-modules/eetq { };
+
         exllamav2 = callPackage ./pkgs/python-modules/exllamav2 { };
 
         fbgemm-gpu = callPackage ./pkgs/python-modules/fbgemm-gpu { };
