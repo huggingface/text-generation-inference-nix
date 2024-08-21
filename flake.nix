@@ -40,6 +40,7 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
+              awq-inference-engine
               causal-conv1d
               eetq
               exllamav2

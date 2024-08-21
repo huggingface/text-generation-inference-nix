@@ -2,6 +2,8 @@ self: super: {
   python3 = super.python3.override {
     packageOverrides =
       python-self: python-super: with python-self; {
+        awq-inference-engine = callPackage ./pkgs/python-modules/awq-inference-engine { };
+
         causal-conv1d = callPackage ./pkgs/python-modules/causal-conv1d { };
 
         eetq = callPackage ./pkgs/python-modules/eetq { };
