@@ -224,7 +224,7 @@ buildPythonPackage rec {
   };
 
   patches =
-    [ ./passthrough-python-lib-rel-path.patch ]
+    [ ./passthrough-python-lib-rel-path.patch ./mkl-rpath.patch ]
     ++ lib.optionals cudaSupport [ ./fix-cmake-cuda-toolkit.patch ]
     ++ lib.optionals (stdenv.isDarwin && stdenv.isx86_64) [
       # pthreadpool added support for Grand Central Dispatch in April

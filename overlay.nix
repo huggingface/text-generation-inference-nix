@@ -1,4 +1,20 @@
 self: super: {
+  blas = super.blas.override {
+    blasProvider = self.mkl;
+  };
+
+  lapack = super.lapack.override {
+    lapackProvider = self.mkl;
+  };
+
+  magma-cuda-static = super.magma-cuda-static.overrideAttrs (
+    _: prevAttrs: {
+      buildInputs = prevAttrs.buildInputs ++ [
+        (super.lib.getLib super.gfortran.cc)
+      ];
+    }
+  );
+
   python3 = super.python3.override {
     packageOverrides =
       python-self: python-super: with python-self; {
