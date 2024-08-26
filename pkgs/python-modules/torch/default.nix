@@ -107,7 +107,9 @@ let
         "7.5"
         "8.0"
         "8.6"
-        "8.7"
+        # This capability seems to be Jetson-only, which we don't care about,
+        # at least for now.
+        # "8.7"
         "8.9"
         "9.0"
         "9.0a"

@@ -19,6 +19,7 @@
       config = {
         allowUnfree = true;
         cudaSupport = true;
+        cudaCapabilities = [ "7.5" "8.0" "8.6" "8.9" "9.0" "9.0a"];
       };
     in
     rec {
