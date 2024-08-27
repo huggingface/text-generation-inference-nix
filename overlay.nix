@@ -1,21 +1,13 @@
-self: super: {
-  blas = super.blas.override {
-    blasProvider = self.mkl;
-  };
+final: prev: {
+  blas = prev.blas.override { blasProvider = prev.mkl; };
 
-  lapack = super.lapack.override {
-    lapackProvider = self.mkl;
-  };
+  lapack = prev.lapack.override { lapackProvider = prev.mkl; };
 
-  magma-cuda-static = super.magma-cuda-static.overrideAttrs (
-    _: prevAttrs: {
-      buildInputs = prevAttrs.buildInputs ++ [
-        (super.lib.getLib super.gfortran.cc)
-      ];
-    }
+  magma-cuda-static = prev.magma-cuda-static.overrideAttrs (
+    _: prevAttrs: { buildInputs = prevAttrs.buildInputs ++ [ (prev.lib.getLib prev.gfortran.cc) ]; }
   );
 
-  python3 = super.python3.override {
+  python3 = prev.python3.override {
     packageOverrides =
       python-self: python-super: with python-self; {
         awq-inference-engine = callPackage ./pkgs/python-modules/awq-inference-engine { };
@@ -43,7 +35,7 @@ self: super: {
         opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
           _: prevAttrs: {
             patches = [
-              (super.fetchpatch {
+              (prev.fetchpatch {
                 url = "https://github.com/open-telemetry/opentelemetry-python-contrib/commit/1c8d8ef5368c15d27c0973ce80787fd94c7b3176.diff";
                 hash = "sha256-Zc9Q5lCxHP73YErf0TqVAsdmgwibW6LZteycW9zB9a8=";
                 stripLen = 2;
@@ -60,8 +52,8 @@ self: super: {
         mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
         torch = callPackage ./pkgs/python-modules/torch {
-          inherit (super.darwin.apple_sdk.frameworks) Accelerate CoreServices;
-          inherit (super.darwin) libobjc;
+          inherit (prev.darwin.apple_sdk.frameworks) Accelerate CoreServices;
+          inherit (prev.darwin) libobjc;
         };
 
         vllm = callPackage ./pkgs/python-modules/vllm { };

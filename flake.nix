@@ -19,11 +19,20 @@
       config = {
         allowUnfree = true;
         cudaSupport = true;
-        cudaCapabilities = [ "7.5" "8.0" "8.6" "8.9" "9.0" "9.0a"];
+        cudaCapabilities = [
+          "7.5"
+          "8.0"
+          "8.6"
+          "8.9"
+          "9.0"
+          "9.0a"
+        ];
       };
     in
     rec {
-      overlay = import ./overlay.nix;
+      # Cheating a bit to conform to the schema.
+      lib.config = config;
+      overlays.default = import ./overlay.nix;
       packages = forAllSystems (
         system:
         let
