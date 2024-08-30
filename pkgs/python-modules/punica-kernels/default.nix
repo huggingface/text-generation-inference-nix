@@ -12,7 +12,7 @@
 }:
 
 buildPythonPackage rec {
-  pname = "punica_kernels";
+  pname = "punica-kernels";
   version = "1.1.0-dev";
 
   src = fetchFromGitHub {
