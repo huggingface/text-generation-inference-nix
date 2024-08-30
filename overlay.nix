@@ -51,6 +51,8 @@ final: prev: {
 
         mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
+        punica-kernels = callPackage ./pkgs/python-modules/punica-kernels { };
+
         torch = callPackage ./pkgs/python-modules/torch {
           inherit (prev.darwin.apple_sdk.frameworks) Accelerate CoreServices;
           inherit (prev.darwin) libobjc;
