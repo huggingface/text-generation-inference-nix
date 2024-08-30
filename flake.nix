@@ -38,7 +38,7 @@
         let
           pkgs = import nixpkgs {
             inherit config system;
-            overlays = [ overlay ];
+            overlays = [ overlays.default ];
           };
           lib = pkgs.lib;
         in
