@@ -2,6 +2,7 @@
   description = "tgi development";
 
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     flake-compat.url = "github:edolstra/flake-compat";
   };
@@ -10,12 +11,10 @@
     {
       self,
       flake-compat,
+      flake-utils,
       nixpkgs,
     }:
-    with import nixpkgs;
     let
-      systems = [ "x86_64-linux" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f system);
       config = {
         allowUnfree = true;
         cudaSupport = true;
@@ -28,24 +27,23 @@
           "9.0a"
         ];
       };
+
+      overlay = import ./overlay.nix;
     in
-    rec {
-      # Cheating a bit to conform to the schema.
-      lib.config = config;
-      overlays.default = import ./overlay.nix;
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit config system;
-            overlays = [ overlays.default ];
-          };
-          lib = pkgs.lib;
-        in
-        rec {
+    flake-utils.lib.eachSystem [ flake-utils.lib.system.x86_64-linux ] (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit config system;
+          overlays = [ overlay ];
+        };
+      in
+      rec {
+        formatter = pkgs.nixfmt-rfc-style;
+        packages = rec {
           all = pkgs.symlinkJoin {
             name = "all";
-            paths = lib.attrsets.attrValues python3Packages;
+            paths = pkgs.lib.attrsets.attrValues python3Packages;
           };
           python3Packages = with pkgs.python3.pkgs; {
             inherit
@@ -68,7 +66,13 @@
               vllm
               ;
           };
-        }
-      );
+        };
+      }
+    )
+    // {
+
+      # Cheating a bit to conform to the schema.
+      lib.config = config;
+      overlays.default = overlay;
     };
 }

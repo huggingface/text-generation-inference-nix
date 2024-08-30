@@ -93,13 +93,15 @@ buildPythonPackage rec {
       ""
   '';
 
-  nativeBuildInputs = [
-    autoAddDriverRunpath
-    cmake
-    ninja
-    pythonRelaxDepsHook
-    which
-  ] ++ lib.optionals cudaSupport [ cudaPackages.cuda_nvcc ]
+  nativeBuildInputs =
+    [
+      autoAddDriverRunpath
+      cmake
+      ninja
+      pythonRelaxDepsHook
+      which
+    ]
+    ++ lib.optionals cudaSupport [ cudaPackages.cuda_nvcc ]
     ++ lib.optionals rocmSupport [ rocmPackages.hipcc ];
 
   build-system = [

@@ -30,7 +30,11 @@ buildPythonPackage rec {
 
   patches = [ ./include-cstdint.diff ];
 
-  patchFlags = ["-d" ".." "-p1"];
+  patchFlags = [
+    "-d"
+    ".."
+    "-p1"
+  ];
 
   sourceRoot = "${src.name}/python";
 
