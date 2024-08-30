@@ -63,6 +63,7 @@
               mamba-ssm
               marlin-kernels
               opentelemetry-instrumentation-grpc
+              punica-kernels
               torch
               vllm
               ;
