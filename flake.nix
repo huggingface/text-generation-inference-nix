@@ -60,6 +60,7 @@
               hf-transfer
               mamba-ssm
               marlin-kernels
+              moe-kernels
               opentelemetry-instrumentation-grpc
               punica-kernels
               torch

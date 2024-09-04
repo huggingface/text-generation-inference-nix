@@ -32,6 +32,8 @@ final: prev: {
 
         marlin-kernels = callPackage ./pkgs/python-modules/marlin-kernels { };
 
+        moe-kernels = callPackage ./pkgs/python-modules/moe-kernels { };
+
         opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
           _: prevAttrs: {
             patches = [
