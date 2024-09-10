@@ -8,18 +8,19 @@
   ninja,
   which,
   cudaPackages,
+  nvidia-ml-py,
   torch,
 }:
 
 buildPythonPackage rec {
   pname = "moe-kernels";
-  version = "0.1.1";
+  version = "0.2.0";
 
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-eGuVsGozuBVumyYlJnR9LiBCjPnuaFBbIBmc2iN/dks=";
+    hash = "sha256-aYEpwAtA6ata0TtY7LIPWy5WfKGqTpxLD/ZX2UyDt8g=";
   };
 
   stdenv = cudaPackages.backendStdenv;
@@ -43,7 +44,10 @@ buildPythonPackage rec {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
   };
 
-  propagatedBuildInputs = [ torch ];
+  dependencies = [
+    nvidia-ml-py
+    torch
+  ];
 
   # cmake/ninja are used for parallel builds, but we don't want the
   # cmake configure hook to kick in.
