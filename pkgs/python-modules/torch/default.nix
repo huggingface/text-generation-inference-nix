@@ -204,7 +204,7 @@ in
 buildPythonPackage rec {
   pname = "torch";
   # Don't forget to update torch-bin to the same version.
-  version = "2.4.0";
+  version = "2.4.1";
   pyproject = true;
 
   disabled = pythonOlder "3.8.0";
@@ -222,7 +222,7 @@ buildPythonPackage rec {
     repo = "pytorch";
     rev = "refs/tags/v${version}";
     fetchSubmodules = true;
-    hash = "sha256-s49rtarGNNFpnNG+kfJtZLE8ND53Ma201I0cOjeFSts=";
+    hash = "sha256-x/zM/57syr46CP1TfGaefSjzvNm4jJbWFZGVGyzPMg8=";
   };
 
   patches =
