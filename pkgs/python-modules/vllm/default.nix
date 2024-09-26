@@ -166,7 +166,10 @@ buildPythonPackage rec {
   cmakeFlags = [ (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_CUTLASS" "${lib.getDev cutlass}") ];
 
   env =
-    lib.optionalAttrs cudaSupport { CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}"; }
+    lib.optionalAttrs cudaSupport {
+      CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+      TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
+    }
     // lib.optionalAttrs rocmSupport {
       # Otherwise it tries to enumerate host supported ROCM gfx archs, and that is not possible due to sandboxing.
       PYTORCH_ROCM_ARCH = lib.strings.concatStringsSep ";" rocmPackages.clr.gpuTargets;
