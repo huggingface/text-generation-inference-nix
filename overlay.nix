@@ -26,6 +26,8 @@ final: prev: {
 
         flash-attn-rotary = callPackage ./pkgs/python-modules/flash-attn-rotary { };
 
+        flash-attn-v1 = callPackage ./pkgs/python-modules/flash-attn-v1 { };
+
         flashinfer = callPackage ./pkgs/python-modules/flashinfer { };
 
         hf-transfer = callPackage ./pkgs/python-modules/hf-transfer { };

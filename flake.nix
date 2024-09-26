@@ -56,6 +56,7 @@
               flash-attn
               flash-attn-layer-norm
               flash-attn-rotary
+              flash-attn-v1
               flashinfer
               hf-transfer
               mamba-ssm
