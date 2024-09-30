@@ -24,4 +24,4 @@ jobs:
       - name: Check formatting
         run: nix fmt -- -c ./
       - name: Build
-        run: nix build .#all
+        run: nix build -L .#all
