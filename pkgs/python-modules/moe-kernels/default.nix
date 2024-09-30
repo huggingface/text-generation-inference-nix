@@ -14,13 +14,13 @@
 
 buildPythonPackage rec {
   pname = "moe-kernels";
-  version = "0.4.0";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-7XDec7Y5zBfPsoqYTYjNQDfpqjY9E1j/ejqia2N1gME=";
+    hash = "sha256-k3reRjYARqfX6gNeMQGYEvIVlgUIWGQvUmjI4NuSVS4=";
   };
 
   stdenv = cudaPackages.backendStdenv;
