@@ -36,22 +36,22 @@ final: prev: {
 
         moe-kernels = callPackage ./pkgs/python-modules/moe-kernels { };
 
-        opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
-          _: prevAttrs: {
-            patches = [
-              (prev.fetchpatch {
-                url = "https://github.com/open-telemetry/opentelemetry-python-contrib/commit/1c8d8ef5368c15d27c0973ce80787fd94c7b3176.diff";
-                hash = "sha256-Zc9Q5lCxHP73YErf0TqVAsdmgwibW6LZteycW9zB9a8=";
-                stripLen = 2;
-                includes = [ "*grpc*" ];
-              })
-            ];
+        # opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
+        #   _: prevAttrs: {
+        #     patches = [
+        #       (prev.fetchpatch {
+        #         url = "https://github.com/open-telemetry/opentelemetry-python-contrib/commit/1c8d8ef5368c15d27c0973ce80787fd94c7b3176.diff";
+        #         hash = "sha256-Zc9Q5lCxHP73YErf0TqVAsdmgwibW6LZteycW9zB9a8=";
+        #         stripLen = 2;
+        #         includes = [ "*grpc*" ];
+        #       })
+        #     ];
 
-            meta = prevAttrs.meta // {
-              broken = false;
-            };
-          }
-        );
+        #     meta = prevAttrs.meta // {
+        #       broken = false;
+        #     };
+        #   }
+        # );
 
         mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
