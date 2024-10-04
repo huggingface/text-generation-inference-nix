@@ -7,8 +7,8 @@ final: prev: {
     _: prevAttrs: { buildInputs = prevAttrs.buildInputs ++ [ (prev.lib.getLib prev.gfortran.cc) ]; }
   );
 
-  python3 = prev.python3.override {
-    packageOverrides =
+  pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+    (
       python-self: python-super: with python-self; {
         awq-inference-engine = callPackage ./pkgs/python-modules/awq-inference-engine { };
 
@@ -74,6 +74,7 @@ final: prev: {
               '';
           }
         );
-      };
-  };
+      }
+    )
+  ];
 }
