@@ -24,13 +24,13 @@ let
 in
 buildPythonPackage rec {
   pname = "marlin-kernels";
-  version = "0.3.0";
+  version = "0.3.1";
 
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-Fw/pWQChJ/bB3MfRTmUYhklJHVvgS5cMGIOcqHPZed4=";
+    hash = "sha256-2XEwbJCLyAOlxHEXwDN1dUIgA99Up6zMSVEsOynfVoI=";
   };
 
   patches = [
