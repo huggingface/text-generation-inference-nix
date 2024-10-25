@@ -21,7 +21,8 @@ let
     rev = "refs/tags/v3.5.1";
     hash = "sha256-sTGYN+bjtEqQ7Ootr/wvx3P9f8MCDSSj3qyCWjfdLEA=";
   };
-in buildPythonPackage rec {
+in
+buildPythonPackage rec {
   pname = "marlin-kernels";
   version = "0.3.0";
 
@@ -31,7 +32,6 @@ in buildPythonPackage rec {
     rev = "v${version}";
     hash = "sha256-Fw/pWQChJ/bB3MfRTmUYhklJHVvgS5cMGIOcqHPZed4=";
   };
-
 
   patches = [
     ./setup.py-nix-support-respect-cmakeFlags.patch
