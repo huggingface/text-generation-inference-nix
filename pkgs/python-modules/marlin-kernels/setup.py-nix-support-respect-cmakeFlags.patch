@@ -1,0 +1,35 @@
+diff --git a/setup.py b/setup.py
+index 2dea84a..3d1e040 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,6 +15,14 @@ from setuptools import Extension, setup
+ from setuptools.command.build_ext import build_ext
+ from torch.utils.cpp_extension import CUDA_HOME
+ 
++import json
++
++if "NIX_ATTRS_JSON_FILE" in os.environ:
++    with open(os.environ["NIX_ATTRS_JSON_FILE"], "r") as f:
++        NIX_ATTRS = json.load(f)
++else:
++    NIX_ATTRS = {"cmakeFlags": os.environ.get("cmakeFlags", "").split()}
++
+ 
+ def load_module_from_path(module_name, path):
+     spec = importlib.util.spec_from_file_location(module_name, path)
+@@ -64,7 +72,6 @@ def remove_prefix(text, prefix):
+ 
+ 
+ class CMakeExtension(Extension):
+-
+     def __init__(self, name: str, cmake_lists_dir: str = ".", **kwa) -> None:
+         super().__init__(name, sources=[], py_limited_api=True, **kwa)
+         self.cmake_lists_dir = os.path.abspath(cmake_lists_dir)
+@@ -129,6 +136,7 @@ class cmake_build_ext(build_ext):
+         cmake_args = [
+             "-DCMAKE_BUILD_TYPE={}".format(cfg),
+             "-DVLLM_TARGET_DEVICE={}".format(VLLM_TARGET_DEVICE),
++            *NIX_ATTRS["cmakeFlags"],
+         ]
+ 
+         verbose = envs.VERBOSE
