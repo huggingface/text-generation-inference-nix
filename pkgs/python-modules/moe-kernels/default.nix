@@ -6,6 +6,9 @@
   autoAddDriverRunpath,
   cmake,
   ninja,
+  packaging,
+  setuptools,
+  wheel,
   which,
   cudaPackages,
   nvidia-ml-py,
@@ -14,34 +17,43 @@
 
 buildPythonPackage rec {
   pname = "moe-kernels";
-  version = "0.6.0";
+  version = "0.7.0";
 
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-DPmdyM96/aA8DG1HD3wGEeV0M47uAhp38BedfDcuJSE=";
+    hash = "sha256-7AhDjxJIvMM4UWyaPlk3ezct5q2MS1193LYrXr5h2Qc=";
   };
 
   stdenv = cudaPackages.backendStdenv;
 
+  nativeBuildInputs = with cudaPackages; [
+    autoAddDriverRunpath
+    cmake
+    cuda_nvcc
+    ninja
+    which
+  ];
+
+  build-system = [
+    packaging
+    setuptools
+    wheel
+  ];
+
   buildInputs = with cudaPackages; [
     cuda_cccl
     cuda_cudart
+    cuda_nvtx
     libcublas
     libcusolver
     libcusparse
   ];
 
-  nativeBuildInputs = [
-    autoAddDriverRunpath
-    cmake
-    ninja
-    which
-  ];
-
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
   };
 
   dependencies = [
