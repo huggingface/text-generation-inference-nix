@@ -88,10 +88,7 @@ final: prev: {
 
         punica-kernels = callPackage ./pkgs/python-modules/punica-kernels { };
 
-        torch = callPackage ./pkgs/python-modules/torch {
-          inherit (prev.darwin.apple_sdk.frameworks) Accelerate CoreServices;
-          inherit (prev.darwin) libobjc;
-        };
+        torch = callPackage ./pkgs/python-modules/torch { };
       }
     )
   ];
