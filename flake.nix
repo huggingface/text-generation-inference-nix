@@ -50,6 +50,7 @@
 
               awq-inference-engine
               causal-conv1d
+              compressed-tensors
               eetq
               exllamav2
               fbgemm-gpu

@@ -14,6 +14,8 @@ final: prev: {
 
         causal-conv1d = callPackage ./pkgs/python-modules/causal-conv1d { };
 
+        compressed-tensors = callPackage ./pkgs/python-modules/compressed-tensors { };
+
         eetq = callPackage ./pkgs/python-modules/eetq { };
 
         exllamav2 = callPackage ./pkgs/python-modules/exllamav2 { };
