@@ -38,22 +38,21 @@ final: prev: {
 
         moe-kernels = callPackage ./pkgs/python-modules/moe-kernels { };
 
-        # opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
-        #   _: prevAttrs: {
-        #     patches = [
-        #       (prev.fetchpatch {
-        #         url = "https://github.com/open-telemetry/opentelemetry-python-contrib/commit/1c8d8ef5368c15d27c0973ce80787fd94c7b3176.diff";
-        #         hash = "sha256-Zc9Q5lCxHP73YErf0TqVAsdmgwibW6LZteycW9zB9a8=";
-        #         stripLen = 2;
-        #         includes = [ "*grpc*" ];
-        #       })
-        #     ];
+        #opentelemetry-proto = python-super.opentelemetry-proto.override { protobuf = super.protobuf3_24; };
 
-        #     meta = prevAttrs.meta // {
-        #       broken = false;
-        #     };
-        #   }
-        # );
+        opentelemetry-instrumentation-grpc = python-super.opentelemetry-instrumentation-grpc.overrideAttrs (
+          _: prevAttrs: {
+            patches = [ ];
+
+            # Overwrite old protobuf files which leads to failing.
+            preCheck = ''
+              python -m grpc_tools.protoc -Itests/protobuf --python_out=tests/protobuf \
+               --grpc_python_out=tests/protobuf tests/protobuf/test_server.proto # --mypy_out=text_generation_server/pb 
+            '';
+
+            nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ python-super.grpcio-tools ];
+          }
+        );
 
         mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
