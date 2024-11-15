@@ -48,6 +48,7 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
+              attention-kernels
               awq-inference-engine
               causal-conv1d
               compressed-tensors
