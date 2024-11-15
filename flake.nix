@@ -54,7 +54,6 @@
               compressed-tensors
               eetq
               exllamav2
-              fbgemm-gpu
               flash-attn
               flash-attn-layer-norm
               flash-attn-rotary

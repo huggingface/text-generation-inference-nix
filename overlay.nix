@@ -22,8 +22,6 @@ final: prev: {
 
         exllamav2 = callPackage ./pkgs/python-modules/exllamav2 { };
 
-        fbgemm-gpu = callPackage ./pkgs/python-modules/fbgemm-gpu { };
-
         flash-attn = callPackage ./pkgs/python-modules/flash-attn { };
 
         flash-attn-layer-norm = callPackage ./pkgs/python-modules/flash-attn-layer-norm { };
