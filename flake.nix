@@ -66,7 +66,6 @@
               opentelemetry-instrumentation-grpc
               punica-kernels
               torch
-              vllm
               ;
           };
         };
