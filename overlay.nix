@@ -62,19 +62,6 @@ final: prev: {
           inherit (prev.darwin.apple_sdk.frameworks) Accelerate CoreServices;
           inherit (prev.darwin) libobjc;
         };
-
-        vllm = callPackage ./pkgs/python-modules/vllm { };
-
-        xformers = python-super.xformers.overrideAttrs (
-          _: prevAttrs: {
-            nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ ninja ];
-            preBuild =
-              prevAttrs.preBuild
-              + ''
-                export MAX_JOBS=$NIX_BUILD_CORES
-              '';
-          }
-        );
       }
     )
   ];
