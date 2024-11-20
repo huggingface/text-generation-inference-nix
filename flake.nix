@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:danieldk/nixpkgs/outlines-v0.1.4-tgi";
     flake-compat.url = "github:edolstra/flake-compat";
   };
 
