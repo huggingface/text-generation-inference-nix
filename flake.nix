@@ -1,5 +1,5 @@
 {
-  description = "tgi development";
+  description = "TGI development";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
