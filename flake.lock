@@ -35,16 +35,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1731562571,
-        "narHash": "sha256-9V0C/H6NL2Vk3Y76msqNA8TgwZ6Ge4frOVawTNFJQmM=",
-        "owner": "nixos",
+        "lastModified": 1732034459,
+        "narHash": "sha256-Zais/zMRuJdlALidkUgEuasXOd37ZZLqkPkF9bIYSrY=",
+        "owner": "danieldk",
         "repo": "nixpkgs",
-        "rev": "19d66fab291f90ce56d0479b128cc7a5271bf666",
+        "rev": "40280e7bf9743cdf563494db4ece2a43aa674fa8",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable-small",
+        "owner": "danieldk",
+        "ref": "outlines-v0.1.4-tgi",
         "repo": "nixpkgs",
         "type": "github"
       }
