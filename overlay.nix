@@ -54,6 +54,36 @@ final: prev: {
           }
         );
 
+        # Temporarily downgrade outlines to work around https://github.com/dottxt-ai/outlines-core/issues/95
+
+        outlines = python-super.outlines.overrideAttrs (
+          _: prevAttrs: rec {
+            version = "0.1.3";
+            name = "${prevAttrs.pname}-${version}";
+
+            src = prev.fetchFromGitHub {
+              owner = "dottxt-ai";
+              repo = prevAttrs.pname;
+              rev = version;
+              hash = "sha256-OACSwdkh46TwTtgsy4HNZbx62UPJJ/Lq1JJ0fFPr9mQ=";
+            };
+          }
+        );
+
+        outlines-core = python-super.outlines-core.overrideAttrs (
+          _: prevAttrs: rec {
+            version = "0.1.14";
+            name = "${prevAttrs.pname}-${version}";
+
+            src = prev.fetchFromGitHub {
+              owner = "dottxt-ai";
+              repo = prevAttrs.pname;
+              rev = version;
+              hash = "sha256-1S1KCTmHRc/5vviRd2fFFh/Sx1OKWDFlrQusMFBjLck=";
+            };
+          }
+        );
+
         mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
         punica-kernels = callPackage ./pkgs/python-modules/punica-kernels { };

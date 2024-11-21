@@ -64,6 +64,7 @@
               marlin-kernels
               moe-kernels
               opentelemetry-instrumentation-grpc
+              outlines
               punica-kernels
               torch
               ;
