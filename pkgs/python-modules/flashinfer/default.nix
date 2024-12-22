@@ -16,54 +16,40 @@
 
 buildPythonPackage rec {
   pname = "flashinfer";
-  version = "0.1.6";
+  version = "0.2.0";
 
   src = fetchFromGitHub {
     owner = "flashinfer-ai";
     repo = pname;
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-60vItCveC7jVEvl/bYbnhAjhkQ0UlqtzCmMpSa0W4HU=";
+    hash = "sha256-Ijr3l0hrR89TPUf/yDfIO5rFmH6whkGSC6HF4LcdtI0=";
   };
 
   prePatch = "chmod -R +w ..";
 
-  patches = [ ./include-cstdint.diff ];
-
-  patchFlags = [
-    "-d"
-    ".."
-    "-p1"
-  ];
-
-  sourceRoot = "${src.name}/python";
-
   stdenv = cudaPackages.backendStdenv;
 
   buildInputs = with cudaPackages; [
-    cuda_cccl
-    cuda_cudart
-    libcublas
-    libcusolver
-    libcusparse
-    psutil
+    torch.cxxdev
   ];
 
   nativeBuildInputs = [
     autoAddDriverRunpath
     cmake
     ninja
+    cudaPackages.cuda_nvcc
     which
   ];
 
   dependencies = [ torch ];
 
   env = {
-    CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
     TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
+    FLASHINFER_ENABLE_AOT = 1;
   };
 
-  propagatedBuildInputs = [ torch ];
+  depends = [ torch ];
 
   # cmake/ninja are used for parallel builds, but we don't want the
   # cmake configure hook to kick in.
@@ -74,6 +60,10 @@ buildPythonPackage rec {
 
   preBuild = ''
     export MAX_JOBS=$NIX_BUILD_CORES
+  '';
+
+  postBuild = ''
+    export HOME=$(mktemp -d)
   '';
 
   pythonImportsCheck = [ "flashinfer" ];
