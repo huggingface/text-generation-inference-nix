@@ -18,19 +18,19 @@ let
   cutlass = fetchFromGitHub {
     owner = "NVIDIA";
     repo = "cutlass";
-    rev = "refs/tags/v3.5.1";
-    hash = "sha256-sTGYN+bjtEqQ7Ootr/wvx3P9f8MCDSSj3qyCWjfdLEA=";
+    rev = "refs/tags/v3.6.0";
+    hash = "sha256-FbMVqR4eZyum5w4Dj5qJgBPOS66sTem/qKZjYIK/7sg=";
   };
 in
 buildPythonPackage rec {
   pname = "marlin-kernels";
-  version = "0.3.6";
+  version = "0.3.7";
 
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-NikmUtqO1ctuTu+TjygCzUbDZnecFSLCIupdI3yRUDA=";
+    hash = "sha256-xh4EnjFSQ3VrGGOsZOMbmIwfFmY6N/KghjmXMTn4tfc=";
   };
 
   patches = [
@@ -64,6 +64,9 @@ buildPythonPackage rec {
 
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    # Build time is largely determined by a few kernels. So opt for parallelism
+    # for every capability.
+    NVCC_THREADS = builtins.length torch.cudaCapabilities;
     TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
   };
 
