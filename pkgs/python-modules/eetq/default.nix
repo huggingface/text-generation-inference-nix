@@ -18,14 +18,14 @@
 
 buildPythonPackage rec {
   pname = "EETQ";
-  version = "1.0.0";
+  version = "1.0.1";
 
   src = fetchFromGitHub {
     owner = "NetEase-FuXi";
     repo = pname;
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-LJejQUYKgy/1Pn1jEl3fX0+/OLevwWlb9sfPZ1cQMIA";
+    hash = "sha256-kQz3aBLoegWQyP4sDgwauuLuiCO8+WB/uOE6yraUl+s=";
   };
 
   stdenv = cudaPackages.backendStdenv;
