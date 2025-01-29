@@ -17,13 +17,13 @@
 
 buildPythonPackage rec {
   pname = "attention-kernels";
-  version = "0.1.1";
+  version = "0.2.0.post2";
 
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-yycP99wyQmOlJlwCL4Dk8gb2ZP0BGDr6H8fuPdVxNr0=";
+    hash = "sha256-VAjV+ICZGmFOUYaW8hqF7AzJx/35ShibPDjj01GfnZQ=";
   };
 
   stdenv = cudaPackages.backendStdenv;
@@ -53,6 +53,9 @@ buildPythonPackage rec {
 
   env = {
     CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
+    # Build time is largely determined by a few kernels. So opt for parallelism
+    # for every capability.
+    NVCC_THREADS = builtins.length torch.cudaCapabilities;
     TORCH_CUDA_ARCH_LIST = lib.concatStringsSep ";" torch.cudaCapabilities;
   };
 
