@@ -17,7 +17,7 @@
 
 buildPythonPackage rec {
   pname = "moe-kernels";
-  version = "0.8.1";
+  version = "0.8.2";
 
   src = fetchFromGitHub {
     owner = "danieldk";
