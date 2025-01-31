@@ -22,8 +22,9 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "danieldk";
     repo = pname;
-    rev = "v${version}";
-    hash = "sha256-oGimpO7KqZtlM6duFmQ2zgG4B9OKntRWJOYoQfQLNlI=";
+    # rev = "v${version}";
+    rev = "moe_fp8_hip";
+    hash = "";
   };
 
   stdenv = cudaPackages.backendStdenv;
