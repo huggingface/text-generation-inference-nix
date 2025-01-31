@@ -24,7 +24,7 @@ buildPythonPackage rec {
     repo = pname;
     # rev = "v${version}";
     rev = "moe_fp8_hip";
-    hash = "";
+    hash = "sha256-heZpJboVPGUbQgpK49YDayPm4rD/GWwbeuZNv/Byzyw=";
   };
 
   stdenv = cudaPackages.backendStdenv;
