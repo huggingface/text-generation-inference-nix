@@ -10,6 +10,9 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
       python-self: python-super: with python-self; {
+        
+        transformers = callPackage ./pkgs/python-modules/transformers { };
+
         attention-kernels = callPackage ./pkgs/python-modules/attention-kernels { };
 
         awq-inference-engine = callPackage ./pkgs/python-modules/awq-inference-engine { };

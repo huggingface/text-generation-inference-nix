@@ -67,6 +67,7 @@
               outlines
               punica-kernels
               torch
+              transformers
               ;
           };
         };
