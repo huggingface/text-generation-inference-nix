@@ -32,6 +32,8 @@ final: prev: {
 
         flashinfer = callPackage ./pkgs/python-modules/flashinfer { };
 
+        hf-kernels = callPackage ./pkgs/python-modules/hf-kernels { };
+
         hf-transfer = callPackage ./pkgs/python-modules/hf-transfer { };
 
         marlin-kernels = callPackage ./pkgs/python-modules/marlin-kernels { };
