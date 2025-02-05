@@ -48,7 +48,7 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
-              attention
+              paged-attention
               attention-kernels
               awq-inference-engine
               causal-conv1d

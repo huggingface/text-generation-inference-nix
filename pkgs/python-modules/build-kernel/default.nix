@@ -57,5 +57,5 @@ buildPythonPackage rec {
   # Tests require CUDA.
   doCheck = false;
 
-  pythonImportsCheck = [ "${pname}" ];
+  pythonImportsCheck = [ "${lib.replaceStrings [ "-" ] [ "_" ] pname}" ];
 }
