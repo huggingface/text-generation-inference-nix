@@ -8,12 +8,12 @@
 
 buildPythonPackage rec {
   pname = "hf-kernels";
-  version = "0.1.4";
+  version = "0.1.5";
 
   src = fetchPypi {
     pname = "hf_kernels";
     inherit version;
-    hash = "sha256-/BzBZmKD0NPxX8/BgCaluZDxBr180D9ARo0GSHAkb7o=";
+    hash = "sha256-fe5UfMCP8+Wz1Lb+wx1EcGNkZbynYa/LE3i1jNHv4YA=";
   };
 
   pyproject = true;
