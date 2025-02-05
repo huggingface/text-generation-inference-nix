@@ -1,5 +1,8 @@
-final: prev: {
+final: prev:
+rec {
   blas = prev.blas.override { blasProvider = prev.mkl; };
+
+  fetchKernel = final.callPackage ./pkgs/fetch-kernel { };
 
   lapack = prev.lapack.override { lapackProvider = prev.mkl; };
 
@@ -7,12 +10,26 @@ final: prev: {
     _: prevAttrs: { buildInputs = prevAttrs.buildInputs ++ [ (prev.lib.getLib prev.gfortran.cc) ]; }
   );
 
+  toml2cmake = final.callPackage ./pkgs/toml2cmake { };
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
       python-self: python-super: with python-self; {
+        attention = buildKernel rec {
+          pname = "attention";
+          version = "0.0.1";
+          src = fetchKernel {
+            repo_id = "kernels-community/${pname}";
+            inherit version;
+            hash = "sha256-kpTDl3eGg/1elBtPFWDE4u3ZmZnnTjvMYTAbKFKB/Og=";
+          };
+        };
+
         attention-kernels = callPackage ./pkgs/python-modules/attention-kernels { };
 
         awq-inference-engine = callPackage ./pkgs/python-modules/awq-inference-engine { };
+
+        buildKernel = callPackage ./pkgs/python-modules/build-kernel { };
 
         causal-conv1d = callPackage ./pkgs/python-modules/causal-conv1d { };
 
@@ -38,6 +55,16 @@ final: prev: {
 
         marlin-kernels = callPackage ./pkgs/python-modules/marlin-kernels { };
 
+        moe = buildKernel rec {
+          pname = "moe";
+          version = "0.1.2";
+          src = fetchKernel {
+            repo_id = "kernels-community/${pname}";
+            inherit version;
+            hash = "sha256-73iDgJEvdTko1MNUVtfLlBlKk9hccAT47B1sYmIxM9w=";
+          };
+        };
+
         moe-kernels = callPackage ./pkgs/python-modules/moe-kernels { };
 
         #opentelemetry-proto = python-super.opentelemetry-proto.override { protobuf = super.protobuf3_24; };
@@ -60,8 +87,20 @@ final: prev: {
 
         punica-kernels = callPackage ./pkgs/python-modules/punica-kernels { };
 
+        quantization = buildKernel rec {
+          pname = "quantization";
+          version = "0.0.3";
+          src = fetchKernel {
+            repo_id = "kernels-community/${pname}";
+            inherit version;
+            hash = "sha256-50eTtzNYjfEvCoANE/1ln5TeWhEnGqpEDfOBMIkBV6U=";
+          };
+          withCutlass = true;
+        };
+
         torch = callPackage ./pkgs/python-modules/torch { };
       }
     )
   ];
 }
+// (import ./pkgs/cutlass { pkgs = final; })

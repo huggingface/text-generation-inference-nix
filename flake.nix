@@ -48,6 +48,7 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
+              attention
               attention-kernels
               awq-inference-engine
               causal-conv1d
@@ -63,10 +64,12 @@
               hf-transfer
               mamba-ssm
               marlin-kernels
+              moe
               moe-kernels
               opentelemetry-instrumentation-grpc
               outlines
               punica-kernels
+              quantization
               torch
               ;
           };
