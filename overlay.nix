@@ -15,13 +15,13 @@ rec {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
       python-self: python-super: with python-self; {
-        attention = buildKernel rec {
-          pname = "attention";
-          version = "0.0.1";
+        paged-attention = buildKernel rec {
+          pname = "paged-attention";
+          version = "0.0.2";
           src = fetchKernel {
             repo_id = "kernels-community/${pname}";
             inherit version;
-            hash = "sha256-kpTDl3eGg/1elBtPFWDE4u3ZmZnnTjvMYTAbKFKB/Og=";
+            hash = "sha256-cfxFC6s5Dtzg+6ia6SJ3nSjzM+cWYbJG5z5yxF19KuE=";
           };
         };
 
