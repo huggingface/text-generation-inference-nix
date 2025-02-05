@@ -59,6 +59,7 @@
               flash-attn-rotary
               flash-attn-v1
               flashinfer
+              hf-kernels
               hf-transfer
               mamba-ssm
               marlin-kernels
