@@ -70,6 +70,7 @@
               outlines
               punica-kernels
               quantization
+              quantization-eetq
               torch
               ;
           };
