@@ -95,7 +95,18 @@ rec {
             inherit version;
             hash = "sha256-50eTtzNYjfEvCoANE/1ln5TeWhEnGqpEDfOBMIkBV6U=";
           };
-          withCutlass = true;
+          cutlass = final.cutlass_3_6;
+        };
+
+        quantization-eetq = buildKernel rec {
+          pname = "quantization-eetq";
+          version = "0.0.1";
+          src = fetchKernel {
+            repo_id = "kernels-community/${pname}";
+            inherit version;
+            hash = "sha256-yy71PMrvzpfp3A7Pbm2Lerh5EKl3tDwC6OusBnuxM1A=";
+          };
+          cutlass = final.cutlass_2_10;
         };
 
         torch = callPackage ./pkgs/python-modules/torch { };

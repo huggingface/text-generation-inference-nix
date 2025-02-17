@@ -10,8 +10,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "huggingface";
     repo = "kernel-builder";
-    rev = "eabeadcedba5dcef2a562b8f1ed5ec1feb485496";
-    hash = "sha256-QPWRaIPAMmQANuAOaZIKzh1e69OG8zBWGg+swESEajw=";
+    rev = "60702d5c9e18b0939a76b8eb811d856af1a731cc";
+    hash = "sha256-N9oRAPg2Pyi38cYEgCSqO7SAT1DU5SdeMoRve5aFNXc=";
   };
 
   sourceRoot = "${src.name}/toml2cmake";

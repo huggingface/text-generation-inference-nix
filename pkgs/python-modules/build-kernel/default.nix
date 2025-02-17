@@ -8,7 +8,6 @@
   ninja,
   toml2cmake,
 
-  cutlass_3_6,
   torch,
 }:
 
@@ -17,7 +16,7 @@
   version,
   src,
 
-  withCutlass ? false,
+  cutlass ? null,
 }:
 
 buildPythonPackage rec {
@@ -32,7 +31,7 @@ buildPythonPackage rec {
 
   buildInputs = [
     torch.cxxdev
-  ] ++ lib.optionals withCutlass [ cutlass_3_6 ];
+  ] ++ lib.optionals (cutlass != null) [ cutlass ];
 
   dependencies = [
     torch
