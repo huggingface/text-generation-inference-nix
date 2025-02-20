@@ -71,6 +71,7 @@
               punica-kernels
               quantization
               quantization-eetq
+              rotary
               torch
               ;
           };

@@ -109,6 +109,16 @@ rec {
           cutlass = final.cutlass_2_10;
         };
 
+        rotary = buildKernel rec {
+          pname = "rotary";
+          version = "0.0.1";
+          src = fetchKernel {
+            repo_id = "kernels-community/${pname}";
+            inherit version;
+            hash = "sha256-MtfcwzRKzbvjjqGtb/RnCQjeyHois0hky8pcuEr1eL4=";
+          };
+        };
+
         torch = callPackage ./pkgs/python-modules/torch { };
       }
     )
