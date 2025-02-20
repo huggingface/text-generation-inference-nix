@@ -16,14 +16,14 @@
 
 buildPythonPackage rec {
   pname = "flashinfer";
-  version = "0.2.0.post1";
+  version = "0.2.0.post2";
 
   src = fetchFromGitHub {
     owner = "flashinfer-ai";
     repo = pname;
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-olqyxtaNt8OUIGJ7nCjwY2Xi5as1aCbkJ1bVdUZ7HqU=";
+    hash = "sha256-S5JNU1YIISPbLFKkSTqBMbjbTr6bUvLdcvS9qyfh/hM=";
   };
 
   prePatch = "chmod -R +w ..";
