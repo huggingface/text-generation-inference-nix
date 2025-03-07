@@ -7,13 +7,12 @@
 }:
 
 buildPythonPackage rec {
-  pname = "hf-kernels";
-  version = "0.1.6";
+  pname = "kernels";
+  version = "0.1.7";
 
   src = fetchPypi {
-    pname = "hf_kernels";
-    inherit version;
-    hash = "sha256-Xv/uUEZVLOIm/4bThwp5n07K45m8sr60BGwowt1zbS8=";
+    inherit pname version;
+    hash = "sha256-C1+Q3YNMmpF04pB9tYyWCDjHxtyPqQXvhKlu4/NSiM4=";
   };
 
   pyproject = true;
@@ -25,7 +24,7 @@ buildPythonPackage rec {
     torch
   ];
 
-  pythonImportsCheck = [ "hf_kernels" ];
+  pythonImportsCheck = [ "kernels" ];
 
   meta = {
     description = "Fetch compute kernels from the hub";
