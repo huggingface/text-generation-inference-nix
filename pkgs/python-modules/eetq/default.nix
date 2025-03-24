@@ -23,9 +23,9 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "NetEase-FuXi";
     repo = pname;
-    rev = "v${version}";
+    rev = "465e9726bf7ae30803a2d0dd9e5d4315aef17491";
     fetchSubmodules = true;
-    hash = "sha256-kQz3aBLoegWQyP4sDgwauuLuiCO8+WB/uOE6yraUl+s=";
+    hash = "sha256-VsK3jYmxiQsDyYTMDI7hntm7e9BGKIJqvuq0WairqhE=";
   };
 
   stdenv = cudaPackages.backendStdenv;
