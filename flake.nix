@@ -61,6 +61,7 @@
               flash-attn-v1
               flashinfer
               hf-transfer
+              hf-xet
               kernels
               mamba-ssm
               marlin-kernels
