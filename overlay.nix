@@ -51,6 +51,8 @@ rec {
 
         hf-transfer = callPackage ./pkgs/python-modules/hf-transfer { };
 
+        hf-xet = callPackage ./pkgs/python-modules/hf-xet { };
+
         kernels = callPackage ./pkgs/python-modules/kernels { };
 
         marlin-kernels = callPackage ./pkgs/python-modules/marlin-kernels { };
