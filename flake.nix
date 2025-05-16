@@ -82,7 +82,6 @@
               quantization-eetq
               rotary
               torch
-              torch_2_6
               ;
           };
 
