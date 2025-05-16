@@ -5,6 +5,8 @@ rec {
   lapack =
     if final.stdenv.isx86_64 then prev.lapack.override { lapackProvider = prev.mkl; } else prev.blas;
 
+  build2cmake = final.callPackage ./pkgs/build2cmake { };
+
   fetchKernel = final.callPackage ./pkgs/fetch-kernel { };
 
   magma-cuda-static = prev.magma-cuda-static.overrideAttrs (
@@ -16,8 +18,6 @@ rec {
       cudaSupport = false;
       rocmSupport = true;
     }).magma;
-
-  toml2cmake = final.callPackage ./pkgs/toml2cmake { };
 
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (

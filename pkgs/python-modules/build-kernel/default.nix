@@ -6,7 +6,7 @@
   cmake,
   cudaPackages,
   ninja,
-  toml2cmake,
+  build2cmake,
 
   torch,
 }:
@@ -38,7 +38,7 @@ buildPythonPackage rec {
   ];
 
   postPatch = ''
-    ${toml2cmake}/bin/toml2cmake generate-torch build.toml
+    ${build2cmake}/bin/build2cmake generate-torch build.toml
   '';
 
   # cmake/ninja are used for parallel builds, but we don't want the
