@@ -163,6 +163,16 @@ let
           "8.6"
           "9.0"
         ];
+
+        # Not in upstream yet, so use same capabilities as 12.8.
+        "12.9" = [
+          "7.5"
+          "8.0"
+          "8.6"
+          "9.0"
+          "10.0"
+          "12.0"
+        ];
       };
       real = capsPerCudaVersion."${lib.versions.majorMinor cudaPackages.cudaVersion}";
       ptx = lists.map (x: "${x}+PTX") real;

@@ -23,11 +23,10 @@ buildPythonPackage rec {
 
   sourceRoot = "${src.name}/hf_xet";
 
-  cargoDeps = rustPlatform.fetchCargoTarball {
+  cargoDeps = rustPlatform.fetchCargoVendor {
     inherit src;
     sourceRoot = "${src.name}/hf_xet";
-    name = "${pname}-${version}";
-    hash = "sha256-eCbg1gqRbPMV6G72zT93cmaEUT9DJlqTajWwhgACX9E=";
+    hash = "sha256-dZ2RdMNgWkRZqFGy31ax7TSGMhuPeBac6AHBFFQzirk=";
   };
 
   build-system = [

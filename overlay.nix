@@ -1,14 +1,21 @@
 final: prev:
 rec {
-  blas = prev.blas.override { blasProvider = prev.mkl; };
+  # Use MKL for BLAS/LAPACK on x86_64.
+  blas = if final.stdenv.isx86_64 then prev.blas.override { blasProvider = prev.mkl; } else prev.blas;
+  lapack =
+    if final.stdenv.isx86_64 then prev.lapack.override { lapackProvider = prev.mkl; } else prev.blas;
 
   fetchKernel = final.callPackage ./pkgs/fetch-kernel { };
-
-  lapack = prev.lapack.override { lapackProvider = prev.mkl; };
 
   magma-cuda-static = prev.magma-cuda-static.overrideAttrs (
     _: prevAttrs: { buildInputs = prevAttrs.buildInputs ++ [ (prev.lib.getLib prev.gfortran.cc) ]; }
   );
+
+  magma-hip =
+    (prev.callPackage ./pkgs/magma {
+      cudaSupport = false;
+      rocmSupport = true;
+    }).magma;
 
   toml2cmake = final.callPackage ./pkgs/toml2cmake { };
 
@@ -125,9 +132,9 @@ rec {
 
         torch = python-self.torch_2_7;
 
-        torch_2_6 = callPackage ./pkgs/python-modules/torch_2_6 { };
+        torch_2_6 = callPackage ./pkgs/python-modules/torch_2_6 { rocmPackages = final.rocmPackages_6_2; };
 
-        torch_2_7 = callPackage ./pkgs/python-modules/torch_2_7 { };
+        torch_2_7 = callPackage ./pkgs/python-modules/torch_2_7 { rocmPackages = final.rocmPackages_6_3; };
       }
     )
   ];
