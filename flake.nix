@@ -48,8 +48,6 @@
           python3Packages = with pkgs.python3.pkgs; {
             inherit
 
-              paged-attention
-              attention-kernels
               awq-inference-engine
               causal-conv1d
               compressed-tensors
@@ -64,11 +62,10 @@
               hf-xet
               kernels
               mamba-ssm
-              marlin-kernels
               moe
-              moe-kernels
               opentelemetry-instrumentation-grpc
               outlines
+              paged-attention
               punica-kernels
               quantization
               quantization-eetq
