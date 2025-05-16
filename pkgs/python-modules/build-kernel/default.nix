@@ -38,7 +38,8 @@ buildPythonPackage rec {
   ];
 
   postPatch = ''
-    ${build2cmake}/bin/build2cmake generate-torch build.toml
+    # We can remove --force later, but some kernels still have registration.h.
+    ${build2cmake}/bin/build2cmake generate-torch --force build.toml
   '';
 
   # cmake/ninja are used for parallel builds, but we don't want the

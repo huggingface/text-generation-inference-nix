@@ -24,11 +24,11 @@ rec {
       python-self: python-super: with python-self; {
         paged-attention = buildKernel rec {
           pname = "paged-attention";
-          version = "0.0.2";
+          version = "0.0.3";
           src = fetchKernel {
             repo_id = "kernels-community/${pname}";
             inherit version;
-            hash = "sha256-cfxFC6s5Dtzg+6ia6SJ3nSjzM+cWYbJG5z5yxF19KuE=";
+            hash = "sha256-Nalnx3kjQcKOa5YaBSKRImnVUHq2lko1TMfFJ7ocTb4=";
           };
         };
 
@@ -66,11 +66,11 @@ rec {
 
         moe = buildKernel rec {
           pname = "moe";
-          version = "0.1.2";
+          version = "0.3.0";
           src = fetchKernel {
             repo_id = "kernels-community/${pname}";
             inherit version;
-            hash = "sha256-73iDgJEvdTko1MNUVtfLlBlKk9hccAT47B1sYmIxM9w=";
+            hash = "sha256-CR0fgiooxt+pBE/VQETjNn7i0jSCD0g2NDC7KdNNIrc=";
           };
         };
 
@@ -98,22 +98,22 @@ rec {
 
         quantization = buildKernel rec {
           pname = "quantization";
-          version = "0.0.3";
+          version = "0.0.4";
           src = fetchKernel {
             repo_id = "kernels-community/${pname}";
             inherit version;
-            hash = "sha256-50eTtzNYjfEvCoANE/1ln5TeWhEnGqpEDfOBMIkBV6U=";
+            hash = "sha256-qAMKM+2pKbYkJ9bHWlVijKcknrBjeFHLTXU2LCKA2dw=";
           };
           cutlass = final.cutlass_3_6;
         };
 
         quantization-eetq = buildKernel rec {
           pname = "quantization-eetq";
-          version = "0.0.1";
+          version = "0.0.2";
           src = fetchKernel {
             repo_id = "kernels-community/${pname}";
             inherit version;
-            hash = "sha256-yy71PMrvzpfp3A7Pbm2Lerh5EKl3tDwC6OusBnuxM1A=";
+            hash = "sha256-TiJAGEpZAR/UxovzsVhc5mto3FD4LA8urE04XA2D4KQ=";
           };
           cutlass = final.cutlass_2_10;
         };
@@ -122,17 +122,17 @@ rec {
 
         rotary = buildKernel rec {
           pname = "rotary";
-          version = "0.0.1";
+          version = "0.0.2";
           src = fetchKernel {
             repo_id = "kernels-community/${pname}";
             inherit version;
-            hash = "sha256-MtfcwzRKzbvjjqGtb/RnCQjeyHois0hky8pcuEr1eL4=";
+            hash = "sha256-D5/ErUNCQbNrbLGBNiucuWocyv+343W7tius6NcM9iQ=";
           };
         };
 
         torch = python-self.torch_2_7;
 
-        torch_2_6 = callPackage ./pkgs/python-modules/torch_2_6 { rocmPackages = final.rocmPackages_6_2; };
+        torch_2_6 = callPackage ./pkgs/python-modules/torch_2_6 { };
 
         torch_2_7 = callPackage ./pkgs/python-modules/torch_2_7 { rocmPackages = final.rocmPackages_6_3; };
       }
