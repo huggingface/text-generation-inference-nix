@@ -94,7 +94,17 @@ rec {
 
         mamba-ssm = callPackage ./pkgs/python-modules/mamba-ssm { };
 
-        punica-kernels = callPackage ./pkgs/python-modules/punica-kernels { };
+        punica-sgmv = buildKernel rec {
+          pname = "punica-sgmv";
+          version = "0.0.1";
+          src = fetchKernel {
+            repo_id = "kernels-community/${pname}";
+            #inherit version;
+            rev = "5a84343633e93e2866f4e907dfc26b1ee07467ae";
+            hash = "sha256-z2em4jEZSgDfPX6s4jykVpuJOI1LRbI69Xq1T5lTM7s=";
+          };
+          cutlass = final.cutlass_3_6;
+        };
 
         quantization = buildKernel rec {
           pname = "quantization";

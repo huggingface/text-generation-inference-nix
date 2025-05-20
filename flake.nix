@@ -77,7 +77,7 @@
               opentelemetry-instrumentation-grpc
               outlines
               paged-attention
-              punica-kernels
+              punica-sgmv
               quantization
               quantization-eetq
               rotary
