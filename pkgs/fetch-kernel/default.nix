@@ -6,11 +6,21 @@
 {
   repo_id,
   hash ? "",
-  version,
+  rev ? null,
+  version ? null,
 }:
 
-fetchgit {
-  url = "https://huggingface.co/${repo_id}";
-  rev = "refs/tags/v${version}";
-  inherit hash;
-}
+assert (
+  lib.assertMsg (lib.xor (rev == null) (
+    version == null
+  )) "fetchKernel requires one of either `rev` or `version` to be provided (not both)."
+);
+
+fetchgit (
+  {
+    url = "https://huggingface.co/${repo_id}";
+    rev = "refs/tags/v${version}";
+    inherit hash;
+  }
+  // (if version == null then { inherit rev; } else { rev = "refs/tags/v${version}"; })
+)
