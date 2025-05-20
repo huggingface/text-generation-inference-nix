@@ -42,8 +42,6 @@ rec {
 
         compressed-tensors = callPackage ./pkgs/python-modules/compressed-tensors { };
 
-        eetq = callPackage ./pkgs/python-modules/eetq { };
-
         exllamav2 = callPackage ./pkgs/python-modules/exllamav2 { };
 
         flash-attn = callPackage ./pkgs/python-modules/flash-attn { };
