@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:danieldk/nixpkgs/kernel-builder-cuda-12.9.0";
+    nixpkgs.url = "github:danieldk/nixpkgs/cudatoolkit-12.9-kernel-builder";
     flake-compat.url = "github:edolstra/flake-compat";
   };
 
