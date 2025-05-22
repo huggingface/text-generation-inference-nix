@@ -22,11 +22,6 @@ cudaPackages.backendStdenv.mkDerivation rec {
     inherit hash;
   };
 
-  postPatch = lib.optionalString (lib.versionOlder version "2.11.0") ''
-    substituteInPlace CMakeLists.txt \
-      --replace-fail "{CMAKE_INSTALL_LIBDIR}/cmake/" "{CMAKE_INSTALL_LIBDIR}/cmake/NvidiaCutlass/"
-  '';
-
   nativeBuildInputs =
     [ cmake ]
     ++ (with cudaPackages; [
@@ -35,6 +30,11 @@ cudaPackages.backendStdenv.mkDerivation rec {
     ]);
 
   buildInputs = [ python3 ] ++ (with cudaPackages; [ cuda_cudart ]);
+
+  postPatch = lib.optionalString (lib.versionOlder version "2.11.0") ''
+    substituteInPlace CMakeLists.txt \
+      --replace-fail "{CMAKE_INSTALL_LIBDIR}/cmake/" "{CMAKE_INSTALL_LIBDIR}/cmake/NvidiaCutlass/"
+  '';
 
   cmakeFlags = [
     (lib.cmakeBool "CUTLASS_ENABLE_GTEST_UNIT_TESTS" false)
