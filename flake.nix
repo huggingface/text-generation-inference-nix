@@ -1,5 +1,5 @@
 {
-  description = "TGI development";
+  description = "Hugging Face Nix overlay";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
