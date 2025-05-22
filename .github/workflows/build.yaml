@@ -17,7 +17,7 @@ jobs:
           cores: 12
       - uses: cachix/cachix-action@v14
         with:
-          name: text-generation-inference
+          name: huggingface
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
         env:
           USER: github_runner

@@ -14,18 +14,18 @@ from our binary cache. Set your `nixpkgs` input to follow this flake:
 ```nix
 {
   inputs = {
-    tgi-nix.url = "github:huggingface/text-generation-inference-nix";
-    nixpkgs.follows = "tgi-nix/nixpkgs";
+    hf-nix.url = "github:huggingface/hf-nix";
+    nixpkgs.follows = "hf-nix/nixpkgs";
   };
   outputs =
     {
       self,
       nixpkgs,
-      tgi-nix,
+      hf-nix,
     }:
 
     # ...
 }
 ```
 
-Then follow the instructions to [install Cachix and enable the TGI cache](https://app.cachix.org/cache/text-generation-inference).
+Then follow the instructions to [install Cachix and enable the Hugging Face Nix cache](https://app.cachix.org/cache/huggingface).
