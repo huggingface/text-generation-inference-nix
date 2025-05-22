@@ -1,7 +1,6 @@
 final: prev: {
   markForRocmRootHook = final.callPackage (
-    { makeSetupHook }:
-    makeSetupHook { name = "mark-for-rocm-root-hook"; } ./mark-for-rocm-root-hook.sh
+    { makeSetupHook }: makeSetupHook { name = "mark-for-rocm-root-hook"; } ./mark-for-rocm-root-hook.sh
   ) { };
 
   setupRocmHook = (
@@ -13,5 +12,5 @@ final: prev: {
         substitutions.setupRocmHook = placeholder "out";
       } ./setup-rocm-hook.sh
     ) { }
-    );
+  );
 }
