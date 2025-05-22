@@ -22,6 +22,6 @@ jobs:
         env:
           USER: github_runner
       - name: Check formatting
-        run: nix fmt -- -c ./
+        run: nix fmt -- --ci
       - name: Build
         run: nix build -L .#all

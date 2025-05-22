@@ -81,7 +81,7 @@
     if cudaSupport then
       triton-cuda
     else if rocmSupport then
-      rocmPackages.aotriton_0_9
+      rocmPackages.aotriton_0_8
     else
       triton,
   triton-cuda,
@@ -123,18 +123,11 @@ let
 
   setBool = v: if v then "1" else "0";
 
+  # https://github.com/pytorch/pytorch/blob/v2.4.0/torch/utils/cpp_extension.py#L1953
   supportedTorchCudaCapabilities =
     let
-      # https://github.com/pytorch/pytorch/blob/release/2.7/.ci/manywheel/build_cuda.sh
+      # https://github.com/pytorch/pytorch/blob/release/2.6/.ci/manywheel/build_cuda.sh
       capsPerCudaVersion = {
-        "12.8" = [
-          "7.5"
-          "8.0"
-          "8.6"
-          "9.0"
-          "10.0"
-          "12.0"
-        ];
         "12.6" = [
           "5.0"
           "6.0"
@@ -153,6 +146,15 @@ let
           "8.6"
           "9.0"
         ];
+        "12.1" = [
+          "5.0"
+          "6.0"
+          "7.0"
+          "7.5"
+          "8.0"
+          "8.6"
+          "9.0"
+        ];
         "11.8" = [
           "3.7"
           "5.0"
@@ -162,16 +164,6 @@ let
           "8.0"
           "8.6"
           "9.0"
-        ];
-
-        # Not in upstream yet, so use same capabilities as 12.8.
-        "12.9" = [
-          "7.5"
-          "8.0"
-          "8.6"
-          "9.0"
-          "10.0"
-          "12.0"
         ];
       };
       real = capsPerCudaVersion."${lib.versions.majorMinor cudaPackages.cudaVersion}";
@@ -200,6 +192,9 @@ let
   supportedCudaCapabilities = lists.intersectLists cudaFlags.cudaCapabilities supportedTorchCudaCapabilities;
   unsupportedCudaCapabilities = lists.subtractLists supportedCudaCapabilities cudaFlags.cudaCapabilities;
 
+  supportedRocmArchs = lists.intersectLists rocmPackages.clr.gpuTargets supportedTorchRocmArchs;
+  unsupportedRocmArchs = lists.subtractLists supportedRocmArchs rocmPackages.clr.gpuTargets;
+
   # Use trivial.warnIf to print a warning if any unsupported GPU targets are specified.
   gpuArchWarner =
     supported: unsupported:
@@ -216,7 +211,7 @@ let
     else if cudaSupport then
       gpuArchWarner supportedCudaCapabilities unsupportedCudaCapabilities
     else if rocmSupport then
-      supportedTorchRocmArchs
+      gpuArchWarner supportedRocmArchs unsupportedRocmArchs
     else
       throw "No GPU targets specified"
   );
@@ -228,7 +223,6 @@ let
       clr
       comgr
       hipblas
-      hipblas-common-dev
       hipblaslt
       hipfft
       hipify-clang
@@ -284,7 +278,7 @@ in
 buildPythonPackage rec {
   pname = "torch";
   # Don't forget to update torch-bin to the same version.
-  version = "2.7.0";
+  version = "2.6.0";
   pyproject = true;
 
   stdenv = effectiveStdenv;
@@ -301,11 +295,9 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "pytorch";
     repo = "pytorch";
-    # Switch back after 2.7 is released.
-    #tag = "v${version}";
-    tag = "v2.7.0-rc9";
+    rev = "refs/tags/v${version}";
     fetchSubmodules = true;
-    hash = "sha256-4QMLBqD2/0QzwmHqNAyEam6bDsuI6YT9LNBYM62ne2U=";
+    hash = "sha256-pjpIEM/pIdcpidhd4hJwjimDX8F21RNySMwJDTCB4p8=";
   };
 
   patches =
@@ -336,38 +328,33 @@ buildPythonPackage rec {
           "# Upstream: set(CUDAToolkit_ROOT"
       substituteInPlace third_party/gloo/cmake/Cuda.cmake \
         --replace-warn "find_package(CUDAToolkit 7.0" "find_package(CUDAToolkit"
-
-      # NCCL repo seems to be cloned unconditionally when third_party/nccl
-      # does not exist.
-      substituteInPlace tools/build_pytorch_libs.py \
-        --replace-fail "if not os.path.exists(nccl_basedir):" "if False:"
     ''
     + lib.optionalString rocmSupport ''
       # https://github.com/facebookincubator/gloo/pull/297
       substituteInPlace third_party/gloo/cmake/Hipify.cmake \
-        --replace-fail "\''${HIPIFY_COMMAND}" "python \''${HIPIFY_COMMAND}"
+        --replace "\''${HIPIFY_COMMAND}" "python \''${HIPIFY_COMMAND}"
 
       # Replace hard-coded rocm paths
       substituteInPlace caffe2/CMakeLists.txt \
-        --replace-fail "/opt/rocm" "${rocmtoolkit_joined}" \
-        --replace-fail "hcc/include" "hip/include" \
-        --replace-fail "rocblas/include" "include/rocblas" \
-        --replace-fail "hipsparse/include" "include/hipsparse"
+        --replace "/opt/rocm" "${rocmtoolkit_joined}" \
+        --replace "hcc/include" "hip/include" \
+        --replace "rocblas/include" "include/rocblas" \
+        --replace "hipsparse/include" "include/hipsparse"
 
       # Doesn't pick up the environment variable?
-      #substituteInPlace third_party/kineto/libkineto/CMakeLists.txt \
-      #  --replace-fail "\''$ENV{ROCM_SOURCE_DIR}" "${rocmtoolkit_joined}" \
-      #  --replace-fail "/opt/rocm" "${rocmtoolkit_joined}"
+      substituteInPlace third_party/kineto/libkineto/CMakeLists.txt \
+        --replace "\''$ENV{ROCM_SOURCE_DIR}" "${rocmtoolkit_joined}" \
+        --replace "/opt/rocm" "${rocmtoolkit_joined}"
 
       # Strangely, this is never set in cmake
       substituteInPlace cmake/public/LoadHIP.cmake \
-        --replace-fail "set(ROCM_PATH \$ENV{ROCM_PATH})" \
+        --replace "set(ROCM_PATH \$ENV{ROCM_PATH})" \
           "set(ROCM_PATH \$ENV{ROCM_PATH})''\nset(ROCM_VERSION ${lib.concatStrings (lib.intersperse "0" (lib.splitVersion rocmPackages.clr.version))})"
     ''
     # Detection of NCCL version doesn't work particularly well when using the static binary.
     + lib.optionalString cudaSupport ''
       substituteInPlace cmake/Modules/FindNCCL.cmake \
-        --replace-fail \
+        --replace \
           'message(FATAL_ERROR "Found NCCL header version and library version' \
           'message(WARNING "Found NCCL header version and library version'
     ''
@@ -505,7 +492,7 @@ buildPythonPackage rec {
       );
     }
     // lib.optionalAttrs rocmSupport {
-      AOTRITON_INSTALLED_PREFIX = rocmPackages.aotriton_0_9;
+      AOTRITON_INSTALLED_PREFIX = rocmPackages.aotriton_0_8;
     };
 
   nativeBuildInputs =
@@ -544,7 +531,6 @@ buildPythonPackage rec {
         cuda_nvrtc
         cuda_nvtx # -llibNVToolsExt
         libcublas
-        libcufile
         libcufft
         libcurand
         libcusolver
@@ -663,11 +649,11 @@ buildPythonPackage rec {
       # Fix up library paths for split outputs
       substituteInPlace \
         $dev/share/cmake/Torch/TorchConfig.cmake \
-        --replace-fail \''${TORCH_INSTALL_PREFIX}/lib "$lib/lib"
+        --replace \''${TORCH_INSTALL_PREFIX}/lib "$lib/lib"
 
       substituteInPlace \
         $dev/share/cmake/Caffe2/Caffe2Targets-release.cmake \
-        --replace-fail \''${_IMPORT_PREFIX}/lib "$lib/lib"
+        --replace \''${_IMPORT_PREFIX}/lib "$lib/lib"
 
       mkdir $lib
       mv $out/${python.sitePackages}/torch/lib $lib/lib
@@ -675,10 +661,10 @@ buildPythonPackage rec {
     ''
     + lib.optionalString rocmSupport ''
       substituteInPlace $dev/share/cmake/Tensorpipe/TensorpipeTargets-release.cmake \
-        --replace-fail "\''${_IMPORT_PREFIX}/lib64" "$lib/lib"
+        --replace "\''${_IMPORT_PREFIX}/lib64" "$lib/lib"
 
       substituteInPlace $dev/share/cmake/ATen/ATenConfig.cmake \
-        --replace-fail "/build/source/torch/include" "$dev/include"
+        --replace "/build/source/torch/include" "$dev/include"
     '';
 
   postFixup =
@@ -730,7 +716,7 @@ buildPythonPackage rec {
       rocmPackages
       ;
     cudaCapabilities = if cudaSupport then supportedCudaCapabilities else [ ];
-    rocmArchs = if rocmSupport then supportedTorchRocmArchs else [ ];
+    rocmArchs = if rocmSupport then supportedRocmArchs else [ ];
     # At least for 1.10.2 `torch.fft` is unavailable unless BLAS provider is MKL. This attribute allows for easy detection of its availability.
     blasProvider = blas.provider;
     # To help debug when a package is broken due to CUDA support

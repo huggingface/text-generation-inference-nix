@@ -35,16 +35,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1737453259,
-        "narHash": "sha256-5LaFI9SQwCZmJDasMoYMdzNouWXNk3BvjKcO19tq1Rs=",
+        "lastModified": 1747820358,
+        "narHash": "sha256-fTqsZsUX6M3yeEvgyQvXcbGmT2CaRVyVwsi8eK29Oj4=",
         "owner": "danieldk",
         "repo": "nixpkgs",
-        "rev": "e0372dbcfd19ddd783b7c3b3868f19322f83318e",
+        "rev": "d3c1681180717528068082103bf323147de6ab0b",
         "type": "github"
       },
       "original": {
         "owner": "danieldk",
-        "ref": "outlines-v0.1.4-tgi",
+        "ref": "cudatoolkit-12.9-kernel-builder",
         "repo": "nixpkgs",
         "type": "github"
       }

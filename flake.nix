@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:danieldk/nixpkgs/outlines-v0.1.4-tgi";
+    nixpkgs.url = "github:danieldk/nixpkgs/cudatoolkit-12.9-kernel-builder";
     flake-compat.url = "github:edolstra/flake-compat";
   };
 
@@ -15,7 +15,7 @@
       nixpkgs,
     }:
     let
-      config = {
+      cudaConfig = {
         allowUnfree = true;
         cudaSupport = true;
         cudaCapabilities = [
@@ -28,30 +28,40 @@
         ];
       };
 
+      rocmConfig = {
+        allowUnfree = true;
+        rocmSupport = true;
+      };
+
       overlay = import ./overlay.nix;
     in
     flake-utils.lib.eachSystem [ flake-utils.lib.system.x86_64-linux ] (
       system:
       let
-        pkgs = import nixpkgs {
-          inherit config system;
+        pkgsCuda = import nixpkgs {
+          inherit system;
+          config = cudaConfig;
+          overlays = [ overlay ];
+        };
+        pkgsRocm = import nixpkgs {
+          inherit system;
+          config = rocmConfig;
           overlays = [ overlay ];
         };
       in
       rec {
-        formatter = pkgs.nixfmt-rfc-style;
+        formatter = pkgsCuda.nixfmt-tree;
         packages = rec {
-          all = pkgs.symlinkJoin {
+          all = pkgsCuda.symlinkJoin {
             name = "all";
-            paths = pkgs.lib.attrsets.attrValues python3Packages;
+            paths = pkgsCuda.lib.attrsets.attrValues python3Packages;
           };
-          python3Packages = with pkgs.python3.pkgs; {
+          python3Packages = with pkgsCuda.python3.pkgs; {
             inherit
 
               awq-inference-engine
               causal-conv1d
               compressed-tensors
-              eetq
               exllamav2
               flash-attn
               flash-attn-layer-norm
@@ -66,12 +76,18 @@
               opentelemetry-instrumentation-grpc
               outlines
               paged-attention
-              punica-kernels
+              punica-sgmv
               quantization
               quantization-eetq
               rotary
               torch
               ;
+          };
+
+          rocm = {
+            python3Packages = with pkgsRocm.python3.pkgs; {
+              inherit torch;
+            };
           };
         };
       }
@@ -79,7 +95,7 @@
     // {
 
       # Cheating a bit to conform to the schema.
-      lib.config = config;
+      lib.config = cudaConfig;
       overlays.default = overlay;
     };
 }
