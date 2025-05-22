@@ -50,7 +50,7 @@
         };
       in
       rec {
-        formatter = pkgsCuda.nixfmt-rfc-style;
+        formatter = pkgsCuda.nixfmt-tree;
         packages = rec {
           all = pkgsCuda.symlinkJoin {
             name = "all";
