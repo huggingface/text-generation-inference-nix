@@ -16,11 +16,11 @@ assert (
   )) "fetchKernel requires one of either `rev` or `version` to be provided (not both)."
 );
 
-fetchgit (
-  {
-    url = "https://huggingface.co/${repo_id}";
-    rev = "refs/tags/v${version}";
-    inherit hash;
-  }
-  // (if version == null then { inherit rev; } else { rev = "refs/tags/v${version}"; })
-)
+let
+  effectiveRev = if rev == null then "refs/tags/v${version}" else rev;
+in
+fetchgit {
+  url = "https://huggingface.co/${repo_id}";
+  rev = effectiveRev;
+  inherit hash;
+}
